@@ -1,4 +1,4 @@
-package com.recruitathon.application.Application;
+package com.recruitathon.suitup;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
