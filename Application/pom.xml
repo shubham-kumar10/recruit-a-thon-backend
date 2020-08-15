@@ -91,7 +91,6 @@
 
 		<!-- End JWT -->
 	</dependencies>
-	</dependencies>
 
 	<build>
 		<plugins>
