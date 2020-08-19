@@ -11,14 +11,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 
-
 @Entity
 @Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "user_id")
 	private Long id;
 
 	@Column(name = "user_name")
@@ -56,11 +55,11 @@ public class User {
 	private Date resetPasswordDate;
 	
 
-	public User(){
-		
+	public User() {
+
 	}
-	
- 	public Long getId() {
+
+	public Long getId() {
 		return id;
 	}
 
@@ -157,6 +156,25 @@ public class User {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((confirmedSignUp == null) ? 0 : confirmedSignUp.hashCode());
+		result = prime * result + ((contactNumber == null) ? 0 : contactNumber.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((regCode == null) ? 0 : regCode.hashCode());
+		result = prime * result + ((resetPassword == null) ? 0 : resetPassword.hashCode());
+		result = prime * result + ((resetPasswordDate == null) ? 0 : resetPasswordDate.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -228,6 +246,7 @@ public class User {
 		return true;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
@@ -236,6 +255,4 @@ public class User {
 				+ resetPassword + ", resetPasswordDate=" + resetPasswordDate + "]";
 	}
 
-	
-	
 }
