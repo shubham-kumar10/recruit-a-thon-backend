@@ -22,11 +22,10 @@ public class UserController {
 	AppUserDetailsService appUserDetailsService;
 
 	@PostMapping("/signUp")
-	public void signupUser(@RequestBody @Valid User newUser) throws UserAlreadyExistsException {
+	public boolean signupUser(@RequestBody @Valid User newUser) throws UserAlreadyExistsException {
 		LOGGER.info("Start of signupUser");
 		LOGGER.debug("new User is {}", newUser);
-		appUserDetailsService.signup(newUser);
-		LOGGER.info("End of signupUser");
+		return appUserDetailsService.signup(newUser);
 	}
 	
 //	@PostMapping("/business")
