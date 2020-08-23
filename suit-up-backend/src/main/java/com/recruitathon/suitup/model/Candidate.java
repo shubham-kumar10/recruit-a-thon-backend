@@ -47,6 +47,22 @@ public class Candidate {
 	
 	@Column(name = "resume", length = 1000)
 	private byte resume[];
+	
+	
+
+	public Candidate(Long id, User user, Date dateOfBirth, String gender, String bio, String country, String city,
+			byte[] profilePicture, byte[] resume) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.bio = bio;
+		this.country = country;
+		this.city = city;
+		this.profilePicture = profilePicture;
+		this.resume = resume;
+	}
 
 	public Long getId() {
 		return id;
