@@ -27,4 +27,14 @@ public class CandidateController {
 	public Candidate addDetails(@RequestBody Candidate candidate) {
 		return candidateService.addDetails(candidate);
 	}
+	
+	@PostMapping("/resume")
+	public byte[] addResume(@RequestBody Candidate candidate) {
+		return candidateService.addResume(candidate);
+	}
+	
+	@PostMapping("picture")
+	public byte[] addProfilePicture() {
+		return null;
+	}
 }

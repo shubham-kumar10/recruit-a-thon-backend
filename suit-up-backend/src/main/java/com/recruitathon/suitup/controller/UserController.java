@@ -28,9 +28,5 @@ public class UserController {
 		return appUserDetailsService.signup(newUser);
 	}
 	
-//	@PostMapping("/business")
-//	public void signUpBusiness(@RequestBody @Valid MentorDTO mentorDetails) {
-//		appUserDetailsService.addMentor(mentorDetails);
-//	}
-	
 }
+
