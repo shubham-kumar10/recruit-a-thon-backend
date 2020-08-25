@@ -19,7 +19,7 @@ public class Education {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "project_id")
+	@Column(name = "education_id")
 	private Long id;
 	
 	@ManyToOne(cascade={CascadeType.MERGE})
