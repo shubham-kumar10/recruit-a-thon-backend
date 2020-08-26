@@ -1,13 +1,10 @@
 package com.recruitathon.suitup.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,10 +27,6 @@ public class InterviewRound {
 	
 	@Column(name="description")
 	private String description;
-	
-	@ManyToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="process_id")
-	private HiringProcess process;
 
 	public String getLocation() {
 		return location;
@@ -49,14 +42,6 @@ public class InterviewRound {
 
 	public void setRoundId(Long roundId) {
 		this.roundId = roundId;
-	}
-
-	public HiringProcess getProcess() {
-		return process;
-	}
-
-	public void setProcess(HiringProcess process) {
-		this.process = process;
 	}
 
 	public String getDuration() {
@@ -91,7 +76,6 @@ public class InterviewRound {
 		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((pointOfContact == null) ? 0 : pointOfContact.hashCode());
-		result = prime * result + ((process == null) ? 0 : process.hashCode());
 		result = prime * result + ((roundId == null) ? 0 : roundId.hashCode());
 		return result;
 	}
@@ -125,11 +109,6 @@ public class InterviewRound {
 				return false;
 		} else if (!pointOfContact.equals(other.pointOfContact))
 			return false;
-		if (process == null) {
-			if (other.process != null)
-				return false;
-		} else if (!process.equals(other.process))
-			return false;
 		if (roundId == null) {
 			if (other.roundId != null)
 				return false;
@@ -141,7 +120,7 @@ public class InterviewRound {
 	@Override
 	public String toString() {
 		return "InterviewRound [roundId=" + roundId + ", location=" + location + ", duration=" + duration
-				+ ", pointOfContact=" + pointOfContact + ", description=" + description + ", process=" + process + "]";
+				+ ", pointOfContact=" + pointOfContact + ", description=" + description +  "]";
 	}
 	
 }

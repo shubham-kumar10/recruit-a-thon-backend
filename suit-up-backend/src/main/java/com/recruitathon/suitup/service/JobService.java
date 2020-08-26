@@ -2,6 +2,8 @@ package com.recruitathon.suitup.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,10 @@ public class JobService {
 	
 	public Job getJob(int id) {
 		return jobRepository.findById(id).get();
+	}
+	
+	@Transactional
+	public Job addJob(Job job) {
+		return jobRepository.save(job);
 	}
 }

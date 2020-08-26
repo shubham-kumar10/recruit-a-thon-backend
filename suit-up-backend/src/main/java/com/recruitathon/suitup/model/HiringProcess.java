@@ -1,5 +1,8 @@
 package com.recruitathon.suitup.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,18 +31,20 @@ public class HiringProcess {
 	@Column(name="duration")
 	private String duration;
 	
-	@OneToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="job_id")
-	private Job job;
+	@OneToMany(cascade={CascadeType.ALL})
+	@JoinColumn(name="process_round_fk",referencedColumnName = "process_id")
+	private List<InterviewRound> rounds = new ArrayList<InterviewRound>();
 
 	
-	public Job getJob() {
-		return job;
+	public List<InterviewRound> getRounds() {
+		return rounds;
 	}
 
-	public void setJob(Job job) {
-		this.job = job;
+	
+	public void setRounds(List<InterviewRound> rounds) {
+		this.rounds = rounds;
 	}
+
 
 	public Long getProcessId() {
 		return processId;
@@ -76,7 +81,7 @@ public class HiringProcess {
 	@Override
 	public String toString() {
 		return "HiringProcess [processId=" + processId + ", description=" + description + ", location=" + location
-				+ ", duration=" + duration + ", job=" + job + "]";
+				+ ", duration=" + duration + ", rounds=" + rounds + "]";
 	}
 
 	@Override
@@ -85,9 +90,9 @@ public class HiringProcess {
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
-		result = prime * result + ((job == null) ? 0 : job.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((processId == null) ? 0 : processId.hashCode());
+		result = prime * result + ((rounds == null) ? 0 : rounds.hashCode());
 		return result;
 	}
 
@@ -110,11 +115,6 @@ public class HiringProcess {
 				return false;
 		} else if (!duration.equals(other.duration))
 			return false;
-		if (job == null) {
-			if (other.job != null)
-				return false;
-		} else if (!job.equals(other.job))
-			return false;
 		if (location == null) {
 			if (other.location != null)
 				return false;
@@ -124,6 +124,11 @@ public class HiringProcess {
 			if (other.processId != null)
 				return false;
 		} else if (!processId.equals(other.processId))
+			return false;
+		if (rounds == null) {
+			if (other.rounds != null)
+				return false;
+		} else if (!rounds.equals(other.rounds))
 			return false;
 		return true;
 	}	
