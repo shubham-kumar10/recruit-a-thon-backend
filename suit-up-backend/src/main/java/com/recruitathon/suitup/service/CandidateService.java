@@ -20,7 +20,7 @@ public class CandidateService {
 	UserRepository userRepository;
 
 	public Candidate getCandidateDetails(String username) {
-		User user = userRepository.findByUserName(username); 
+		User user = userRepository.findByUserName(username);
 		return candidateRepository.findByUser(user);
 	}
 
@@ -29,6 +29,12 @@ public class CandidateService {
 		User user = userRepository.findById(candidate.getUser().getId());
 		candidateRepository.save(candidate);
 		return candidateRepository.findByUser(user);
+	}
+	
+	@Transactional
+	public byte[] addResume(Candidate candidate) {
+		candidateRepository.save(candidate);
+		return candidateRepository.findByUser(candidate.getUser()).getResume();
 	}
 
 }
