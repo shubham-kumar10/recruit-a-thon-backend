@@ -19,7 +19,7 @@ public class Certificate {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "project_id")
+	@Column(name = "certificate_id")
 	private Long id;
 	
 	@ManyToOne(cascade={CascadeType.MERGE})
