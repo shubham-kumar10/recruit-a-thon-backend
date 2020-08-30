@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.recruitathon.suitup.model.Candidate;
+import com.recruitathon.suitup.model.Experience;
 import com.recruitathon.suitup.model.User;
 import com.recruitathon.suitup.repository.CandidateRepository;
+import com.recruitathon.suitup.repository.ExperienceRepository;
 import com.recruitathon.suitup.repository.UserRepository;
 
 @Service
