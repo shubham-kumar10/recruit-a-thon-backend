@@ -20,7 +20,7 @@ public class JobService {
 		return jobRepository.findAll();
 	}
 	
-	public Job getJob(int id) {
+	public Job getJob(long id) {
 		return jobRepository.findById(id).get();
 	}
 	
