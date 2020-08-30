@@ -48,7 +48,7 @@ public class AppUserDetailsService implements UserDetailsService {
 		System.out.println(newUser);
 		User user = userRepository.findByUserName(newUser.getUserName());
 		if (user != null) {
-			throw new UserAlreadyExistsException("User Already Exists");
+			throw new UserAlreadyExistsException("User Already Exists With This Email.");
 		} else {
 			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
