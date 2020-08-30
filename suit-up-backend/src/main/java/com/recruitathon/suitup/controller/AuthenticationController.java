@@ -36,13 +36,14 @@ public class AuthenticationController {
 		String username = getUser(authHeader);
 		authmap.put("username", username);
 		User user = UserRepository.findByUserName(username);
-		//String role = user.getRole().equals("S") ? "Student" : user.getRole().equals("M") ? "Mentor":"";
+		//String role = user.getRole().equals("C") ? "Candidate" : user.getRole().equals("Recruiter") ? "Mentor":"";
 		
 		/* Adding user details to auth-map */
 		authmap.put("id", user.getId().toString());
 		authmap.put("firstname", user.getFirstName());
 		authmap.put("lastname", user.getLastName());
 		authmap.put("token", generateJwt(getUser(authHeader)));
+		//authmap.put("role", role);
 		
 		LOGGER.info("End of authenticate()");
 		
