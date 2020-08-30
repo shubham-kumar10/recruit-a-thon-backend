@@ -50,7 +50,10 @@ public class Job {
 	
 	@Column(name="vacancies")
 	private int vacancies;
-
+	
+	@Column(name="position")
+	private int position;
+	
 	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="process_id")
 	private HiringProcess process;
@@ -58,6 +61,15 @@ public class Job {
 	
 	public Long getJobId() {
 		return jobId;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+	
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public void setJobId(Long jobId) {
@@ -154,6 +166,7 @@ public class Job {
 		result = prime * result + ((jobId == null) ? 0 : jobId.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((pointOfContact == null) ? 0 : pointOfContact.hashCode());
+		result = prime * result + position;
 		result = prime * result + ((postedOn == null) ? 0 : postedOn.hashCode());
 		result = prime * result + ((process == null) ? 0 : process.hashCode());
 		result = prime * result + travelPercent;
@@ -201,6 +214,8 @@ public class Job {
 				return false;
 		} else if (!pointOfContact.equals(other.pointOfContact))
 			return false;
+		if (position != other.position)
+			return false;
 		if (postedOn == null) {
 			if (other.postedOn != null)
 				return false;
@@ -225,7 +240,7 @@ public class Job {
 		return "Job [jobId=" + jobId + ", companyName=" + companyName + ", postedOn=" + postedOn + ", description="
 				+ description + ", location=" + location + ", pointOfContact=" + pointOfContact + ", compensation="
 				+ compensation + ", travelRequired=" + travelRequired + ", travelPercent=" + travelPercent
-				+ ", vacancies=" + vacancies + ", process=" + process + "]";
+				+ ", vacancies=" + vacancies + ", position=" + position + ", process=" + process + "]";
 	}
 	
 }
