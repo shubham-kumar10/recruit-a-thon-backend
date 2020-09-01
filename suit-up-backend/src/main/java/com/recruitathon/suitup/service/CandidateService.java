@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.recruitathon.suitup.exception.UserDoesNotExistsException;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.model.User;
 import com.recruitathon.suitup.repository.CandidateRepository;
@@ -25,10 +26,15 @@ public class CandidateService {
 	}
 
 	@Transactional
-	public Candidate addDetails(Candidate candidate) {
-		User user = userRepository.findById(candidate.getUser().getId());
-		candidateRepository.save(candidate);
-		return candidateRepository.findByUser(user);
+	public Candidate addDetails(Candidate candidate, long id) throws UserDoesNotExistsException {
+		User user = userRepository.findById(id);
+		if(user != null) {
+			candidate.setUser(user);
+			candidateRepository.save(candidate);
+			return candidateRepository.findByUser(user);
+		}
+		else
+			throw new UserDoesNotExistsException("The given id is not mapped to a User");
 	}
 	
 	@Transactional

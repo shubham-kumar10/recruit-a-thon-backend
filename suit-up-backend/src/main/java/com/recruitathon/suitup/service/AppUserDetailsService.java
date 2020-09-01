@@ -43,7 +43,7 @@ public class AppUserDetailsService implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 	
-	public boolean signup(User newUser) throws UserAlreadyExistsException {
+	public User signup(User newUser) throws UserAlreadyExistsException {
 		LOGGER.info("NEW User IS: " + newUser);
 		System.out.println(newUser);
 		User user = userRepository.findByUserName(newUser.getUserName());
@@ -55,6 +55,6 @@ public class AppUserDetailsService implements UserDetailsService {
 			newUser.setPassword(encodedPassword);
 			userRepository.save(newUser);
 		}
-		return (userRepository.existsByUserName(newUser.getUserName()));
+		return (userRepository.findByUserName(newUser.getUserName()));
 	}
 }

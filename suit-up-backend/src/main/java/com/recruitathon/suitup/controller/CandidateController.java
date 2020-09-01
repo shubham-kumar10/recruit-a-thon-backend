@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recruitathon.suitup.exception.UserDoesNotExistsException;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.service.CandidateService;
 
@@ -23,9 +24,9 @@ public class CandidateController {
 		return candidateService.getCandidateDetails(username);
 	}
 	
-	@PostMapping
-	public Candidate addDetails(@RequestBody Candidate candidate) {
-		return candidateService.addDetails(candidate);
+	@PostMapping("/{id}")
+	public Candidate addDetails(@RequestBody Candidate candidate, @PathVariable long id ) throws UserDoesNotExistsException {
+		return candidateService.addDetails(candidate,id);
 	}
 	
 	@PostMapping("/resume")
