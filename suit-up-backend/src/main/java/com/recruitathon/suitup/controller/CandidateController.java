@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recruitathon.suitup.dto.CandidateDetails;
 import com.recruitathon.suitup.exception.UserDoesNotExistsException;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.service.CandidateService;
@@ -20,7 +21,7 @@ public class CandidateController {
 	CandidateService candidateService;
 
 	@GetMapping("/{username}")
-	public Candidate getCandidateDetails(@PathVariable String username) {
+	public CandidateDetails getCandidateDetails(@PathVariable String username) {
 		return candidateService.getCandidateDetails(username);
 	}
 	

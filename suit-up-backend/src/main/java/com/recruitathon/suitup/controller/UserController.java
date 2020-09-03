@@ -1,5 +1,8 @@
 package com.recruitathon.suitup.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,10 +25,18 @@ public class UserController {
 	AppUserDetailsService appUserDetailsService;
 
 	@PostMapping("/signUp")
-	public User signupUser(@RequestBody @Valid User newUser) throws UserAlreadyExistsException {
+	public Map<String, String> signupUser(@RequestBody @Valid User newUser) throws UserAlreadyExistsException {
 		LOGGER.info("Start of signupUser");
 		LOGGER.debug("new User is {}", newUser);
-		return appUserDetailsService.signup(newUser);
+		User user = appUserDetailsService.signup(newUser);
+		Map<String, String> authmap = new HashMap<String, String>();
+		String username = user.getUserName();
+		authmap.put("username", username);
+		authmap.put("id", user.getId().toString());
+		authmap.put("firstname", user.getFirstName());
+		authmap.put("lastname", user.getLastName());
+		authmap.put("token", null);
+		return authmap;
 	}
 	
 }
