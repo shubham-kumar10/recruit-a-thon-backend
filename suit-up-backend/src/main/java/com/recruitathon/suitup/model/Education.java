@@ -42,6 +42,17 @@ public class Education {
 	@Column(name="description")
 	private String description;
 
+	public Education(@NotNull Candidate candidate, String institution, Date startDate, Date endDate, String degree,
+			String description) {
+		super();
+		this.candidate = candidate;
+		this.institution = institution;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.degree = degree;
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}

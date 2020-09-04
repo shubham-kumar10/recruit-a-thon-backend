@@ -11,7 +11,14 @@ public class ExperienceDetails {
 	private String designation;
 	private String type;
 	private String location;
+	private boolean current;
 	
+	public boolean isCurrent() {
+		return current;
+	}
+	public void setCurrent(boolean current) {
+		this.current = current;
+	}
 	public Long getId() {
 		return id;
 	}

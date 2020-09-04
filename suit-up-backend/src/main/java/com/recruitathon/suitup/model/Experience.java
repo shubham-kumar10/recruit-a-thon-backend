@@ -44,6 +44,22 @@ public class Experience {
 	
 	@Column(name="location")
 	private String location;
+	
+	@Column(name="current")
+	private boolean current;
+
+	public Experience(@NotNull Candidate candidate, String organization, Date startDate, Date endDate,
+			String designation, String type, String location, boolean current) {
+		super();
+		this.candidate = candidate;
+		this.organization = organization;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.designation = designation;
+		this.type = type;
+		this.location = location;
+		this.current = current;
+	}
 
 	public Long getId() {
 		return id;
@@ -107,6 +123,14 @@ public class Experience {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public boolean isCurrent() {
+		return current;
+	}
+
+	public void setCurrent(boolean current) {
+		this.current = current;
 	}
 
 	@Override

@@ -42,6 +42,17 @@ public class Project {
 	@NotNull
 	private Candidate candidate;
 
+	public Project(String name, String description, Date startDate, Date endDate, boolean ongoing,
+			@NotNull Candidate candidate) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.ongoing = ongoing;
+		this.candidate = candidate;
+	}
+
 	public Long getId() {
 		return id;
 	}
