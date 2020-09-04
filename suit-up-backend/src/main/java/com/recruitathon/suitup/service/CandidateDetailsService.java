@@ -43,7 +43,7 @@ public class CandidateDetailsService {
 	public Experience addExperience(ExperienceDetails experience, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
 		Experience entity = new Experience(candidate, experience.getOrganization(), experience.getStartDate(),
-				experience.getEndDate(), experience.getDesignation(), experience.getType(), experience.getLocation());
+				experience.getEndDate(), experience.getDesignation(), experience.getType(), experience.getLocation(),experience.isCurrent());
 		return experienceRepository.save(entity);
 	}
 
