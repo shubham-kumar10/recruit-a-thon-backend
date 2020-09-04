@@ -2,11 +2,15 @@ package com.recruitathon.suitup.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ExperienceDetails {
 
 	private Long id;
 	private String organization;
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date startDate;
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date endDate;
 	private String designation;
 	private String type;

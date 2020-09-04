@@ -47,8 +47,10 @@ public class Candidate {
 	
 	@Column(name = "resume", length = 1000)
 	private byte resume[];
-	
-	
+
+	public Candidate() {
+		super();
+	}
 
 	public Candidate(Long id, User user, Date dateOfBirth, String gender, String bio, String country, String city,
 			byte[] profilePicture, byte[] resume) {
