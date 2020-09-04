@@ -57,7 +57,7 @@ public class CandidateDetailsService {
 	public Education addEducation(EducationDetails education, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
 		Education entity = new Education(candidate, education.getInstitution(), education.getStartDate(),
-				education.getEndDate(), education.getDegree(), education.getDescription());
+				education.getEndDate(), education.getDegree(), education.getDescription(), education.getPercentage());
 		return educationRepository.save(entity);
 	}
 

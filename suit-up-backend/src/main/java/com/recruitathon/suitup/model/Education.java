@@ -45,9 +45,12 @@ public class Education {
 	
 	@Column(name="description")
 	private String description;
+	
+	@Column(name="percentage")
+	private double percentage;
 
 	public Education(@NotNull Candidate candidate, String institution, Date startDate, Date endDate, String degree,
-			String description) {
+			String description,double percentage) {
 		super();
 		this.candidate = candidate;
 		this.institution = institution;
@@ -55,6 +58,7 @@ public class Education {
 		this.endDate = endDate;
 		this.degree = degree;
 		this.description = description;
+		this.percentage = percentage;
 	}
 
 	public Education() {
@@ -115,6 +119,14 @@ public class Education {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(double percentage) {
+		this.percentage = percentage;
 	}
 
 	@Override

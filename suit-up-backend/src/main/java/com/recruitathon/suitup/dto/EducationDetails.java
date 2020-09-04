@@ -13,6 +13,7 @@ public class EducationDetails {
 	private Date endDate;
 	private String degree;
 	private String description;
+	private double percentage;
 	
 	public Long getId() {
 		return id;
@@ -55,6 +56,12 @@ public class EducationDetails {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public double getPercentage() {
+		return percentage;
+	}
+	public void setPercentage(double percentage) {
+		this.percentage = percentage;
 	}
 	
 }
