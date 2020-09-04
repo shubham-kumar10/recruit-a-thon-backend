@@ -2,16 +2,12 @@ package com.recruitathon.suitup.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,11 +19,6 @@ public class Education {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "education_id")
 	private Long id;
-	
-	@ManyToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="candidate_id")
-	@NotNull
-	private Candidate candidate;
 	
 	@Column(name="institution")
 	private String institution;
@@ -49,10 +40,9 @@ public class Education {
 	@Column(name="percentage")
 	private double percentage;
 
-	public Education(@NotNull Candidate candidate, String institution, Date startDate, Date endDate, String degree,
+	public Education(String institution, Date startDate, Date endDate, String degree,
 			String description,double percentage) {
 		super();
-		this.candidate = candidate;
 		this.institution = institution;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -71,14 +61,6 @@ public class Education {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
 	}
 
 	public String getInstitution() {
@@ -133,7 +115,6 @@ public class Education {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
 		result = prime * result + ((degree == null) ? 0 : degree.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
@@ -152,11 +133,6 @@ public class Education {
 		if (getClass() != obj.getClass())
 			return false;
 		Education other = (Education) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
 		if (degree == null) {
 			if (other.degree != null)
 				return false;
@@ -192,7 +168,7 @@ public class Education {
 
 	@Override
 	public String toString() {
-		return "Education [id=" + id + ", candidate=" + candidate + ", institution=" + institution + ", startDate="
+		return "Education [id=" + id + ", institution=" + institution + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", degree=" + degree + ", description=" + description + "]";
 	}
 	

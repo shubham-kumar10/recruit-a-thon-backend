@@ -2,6 +2,7 @@ package com.recruitathon.suitup.model;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -47,6 +49,22 @@ public class Candidate {
 	
 	@Column(name = "resume", length = 1000)
 	private byte resume[];
+	
+	@OneToMany(cascade={CascadeType.MERGE})
+	@JoinColumn(name="edu_fk")
+	private List<Education> education;
+	
+	@OneToMany(cascade={CascadeType.MERGE})
+	@JoinColumn(name="exp_fk")
+	private List<Experience> experience;
+	
+	@OneToMany(cascade={CascadeType.MERGE})
+	@JoinColumn(name="project_fk")
+	private List<Project> project;
+	
+	@OneToMany(cascade={CascadeType.MERGE})
+	@JoinColumn(name="skill_fk")
+	private List<Skills> skills;
 
 	public Candidate() {
 		super();
@@ -137,6 +155,38 @@ public class Candidate {
 	public void setResume(byte[] resume) {
 		this.resume = resume;
 	}
+	
+	public List<Education> getEducation() {
+		return education;
+	}
+
+	public void setEducation(List<Education> education) {
+		this.education = education;
+	}
+
+	public List<Experience> getExperience() {
+		return experience;
+	}
+
+	public void setExperience(List<Experience> experience) {
+		this.experience = experience;
+	}
+
+	public List<Project> getProject() {
+		return project;
+	}
+
+	public void setProject(List<Project> project) {
+		this.project = project;
+	}
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
+	}
 
 	@Override
 	public int hashCode() {
@@ -146,10 +196,14 @@ public class Candidate {
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		result = prime * result + ((education == null) ? 0 : education.hashCode());
+		result = prime * result + ((experience == null) ? 0 : experience.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Arrays.hashCode(profilePicture);
+		result = prime * result + ((project == null) ? 0 : project.hashCode());
 		result = prime * result + Arrays.hashCode(resume);
+		result = prime * result + ((skills == null) ? 0 : skills.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -183,6 +237,16 @@ public class Candidate {
 				return false;
 		} else if (!dateOfBirth.equals(other.dateOfBirth))
 			return false;
+		if (education == null) {
+			if (other.education != null)
+				return false;
+		} else if (!education.equals(other.education))
+			return false;
+		if (experience == null) {
+			if (other.experience != null)
+				return false;
+		} else if (!experience.equals(other.experience))
+			return false;
 		if (gender == null) {
 			if (other.gender != null)
 				return false;
@@ -195,7 +259,17 @@ public class Candidate {
 			return false;
 		if (!Arrays.equals(profilePicture, other.profilePicture))
 			return false;
+		if (project == null) {
+			if (other.project != null)
+				return false;
+		} else if (!project.equals(other.project))
+			return false;
 		if (!Arrays.equals(resume, other.resume))
+			return false;
+		if (skills == null) {
+			if (other.skills != null)
+				return false;
+		} else if (!skills.equals(other.skills))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -209,7 +283,8 @@ public class Candidate {
 	public String toString() {
 		return "Candidate [id=" + id + ", user=" + user + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender
 				+ ", bio=" + bio + ", country=" + country + ", city=" + city + ", profilePicture="
-				+ Arrays.toString(profilePicture) + ", resume=" + Arrays.toString(resume) + "]";
+				+ Arrays.toString(profilePicture) + ", resume=" + Arrays.toString(resume) + ", education=" + education
+				+ ", experience=" + experience + ", project=" + project + ", skills=" + skills + "]";
 	}
 
 	

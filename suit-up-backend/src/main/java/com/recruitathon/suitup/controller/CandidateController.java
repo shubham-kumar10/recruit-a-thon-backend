@@ -39,4 +39,5 @@ public class CandidateController {
 	public byte[] addProfilePicture() {
 		return null;
 	}
+	
 }

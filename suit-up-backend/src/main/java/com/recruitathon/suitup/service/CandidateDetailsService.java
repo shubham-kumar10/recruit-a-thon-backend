@@ -1,12 +1,10 @@
 package com.recruitathon.suitup.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recruitathon.suitup.dto.EducationDetails;
-import com.recruitathon.suitup.dto.ExperienceDetails;
-import com.recruitathon.suitup.dto.ProjectDetails;
-import com.recruitathon.suitup.dto.SkillDetails;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.model.Education;
 import com.recruitathon.suitup.model.Experience;
@@ -40,30 +38,32 @@ public class CandidateDetailsService {
 	@Autowired
 	SkillsRepository skillsRepository;
 
-	public Experience addExperience(ExperienceDetails experience, long id) {
+	public List<Experience> addExperience(List<Experience> experienceList, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
-		Experience entity = new Experience(candidate, experience.getOrganization(), experience.getStartDate(),
-				experience.getEndDate(), experience.getDesignation(), experience.getType(), experience.getLocation(),experience.isCurrent());
-		return experienceRepository.save(entity);
+		candidate.setExperience(experienceList);
+		candidateRepository.save(candidate);
+		return candidateRepository.findById(id).get().getExperience();
 	}
 
-	public Project addProject(ProjectDetails project, long id) {
+	public List<Project> addProject(List<Project> projectList, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
-		Project entity = new Project(project.getName(), project.getDescription(), project.getStartDate(),
-				project.getEndDate(), project.isOngoing(), candidate);
-		return projectRepository.save(entity);
+		candidate.setProject(projectList);
+		candidateRepository.save(candidate);
+		return candidateRepository.findById(id).get().getProject();
 	}
 
-	public Education addEducation(EducationDetails education, long id) {
+	public List<Education> addEducation(List<Education> educationList, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
-		Education entity = new Education(candidate, education.getInstitution(), education.getStartDate(),
-				education.getEndDate(), education.getDegree(), education.getDescription(), education.getPercentage());
-		return educationRepository.save(entity);
+		candidate.setEducation(educationList);
+		candidateRepository.save(candidate);
+		return candidateRepository.findById(id).get().getEducation();
 	}
 
-	public Skills addSkills(SkillDetails skills, long id) {
+	public List<Skills> addSkills(List<Skills> skillList, long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
-		Skills entity = new Skills(candidate, skills.getSkillName(), skills.getRating());
-		return skillsRepository.save(entity);
+		candidate.setSkills(skillList);
+		candidateRepository.save(candidate);
+		return candidateRepository.findById(id).get().getSkills();
 	}
+	
 }

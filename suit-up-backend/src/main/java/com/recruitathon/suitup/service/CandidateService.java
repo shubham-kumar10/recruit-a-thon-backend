@@ -20,12 +20,16 @@ public class CandidateService {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	CandidateDetailsService candidateDetails;
+
 	public CandidateDetails getCandidateDetails(long id) {
 		User user = userRepository.findById(id);
 		Candidate candidate = candidateRepository.findByUser(user);
 		CandidateDetails candidateDetails = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(),
 				candidate.getGender(), candidate.getBio(), candidate.getCountry(), candidate.getCity(),
-				candidate.getProfilePicture(), candidate.getResume());
+				candidate.getProfilePicture(), candidate.getResume(), candidate.getEducation(),
+				candidate.getProject(), candidate.getExperience(), candidate.getSkills());
 		return candidateDetails;
 	}
 
@@ -36,8 +40,8 @@ public class CandidateService {
 			candidate.setUser(user);
 			candidateRepository.save(candidate);
 			Candidate newCandidate = candidateRepository.findByUser(user);
-			return new CandidateDetails(newCandidate.getId(), newCandidate.getDateOfBirth(),
-					newCandidate.getGender(), newCandidate.getBio(), newCandidate.getCountry(), newCandidate.getCity(),
+			return new CandidateDetails(newCandidate.getId(), newCandidate.getDateOfBirth(), newCandidate.getGender(),
+					newCandidate.getBio(), newCandidate.getCountry(), newCandidate.getCity(),
 					newCandidate.getProfilePicture(), newCandidate.getResume());
 		} else
 			throw new UserDoesNotExistsException("The given id is not mapped to a User");
@@ -48,7 +52,7 @@ public class CandidateService {
 		candidateRepository.save(candidate);
 		return candidateRepository.findByUser(candidate.getUser()).getResume();
 	}
-	
+
 	@Transactional
 	public byte[] addProfilePicture(Candidate candidate) {
 		candidateRepository.save(candidate);
