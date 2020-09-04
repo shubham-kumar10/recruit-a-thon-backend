@@ -2,16 +2,12 @@ package com.recruitathon.suitup.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,11 +19,6 @@ public class Experience {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "experience_id")
 	private Long id;
-	
-	@ManyToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="candidate_id")
-	@NotNull
-	private Candidate candidate;
 	
 	@Column(name="organization")
 	private String organization;
@@ -56,10 +47,9 @@ public class Experience {
 		super();
 	}
 
-	public Experience(@NotNull Candidate candidate, String organization, Date startDate, Date endDate,
+	public Experience(String organization, Date startDate, Date endDate,
 			String designation, String type, String location, boolean current) {
 		super();
-		this.candidate = candidate;
 		this.organization = organization;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -75,14 +65,6 @@ public class Experience {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
 	}
 
 	public String getOrganization() {
@@ -145,7 +127,6 @@ public class Experience {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
 		result = prime * result + ((designation == null) ? 0 : designation.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -165,11 +146,6 @@ public class Experience {
 		if (getClass() != obj.getClass())
 			return false;
 		Experience other = (Experience) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
 		if (designation == null) {
 			if (other.designation != null)
 				return false;
@@ -210,7 +186,7 @@ public class Experience {
 
 	@Override
 	public String toString() {
-		return "Experience [id=" + id + ", candidate=" + candidate + ", organization=" + organization + ", startDate="
+		return "Experience [id=" + id + ", organization=" + organization + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", designation=" + designation + ", type=" + type + ", location="
 				+ location + "]";
 	}

@@ -3,6 +3,11 @@ package com.recruitathon.suitup.dto;
 import java.sql.Date;
 import java.util.List;
 
+import com.recruitathon.suitup.model.Education;
+import com.recruitathon.suitup.model.Experience;
+import com.recruitathon.suitup.model.Project;
+import com.recruitathon.suitup.model.Skills;
+
 public class CandidateDetails {
 	
 	private Long id;
@@ -14,7 +19,10 @@ public class CandidateDetails {
 	private byte profilePicture[];
 	private byte resume[];
 	private List<ApplicationDetails> applications;
-	
+	private List<Education> education;
+	private List<Project> project;
+	private List<Experience> experience;
+	private List<Skills> skills;
 	
 	public CandidateDetails(Long id, Date dateOfBirth, String gender, String bio, String country, String city,
 			byte[] profilePicture, byte[] resume) {
@@ -29,6 +37,27 @@ public class CandidateDetails {
 		this.resume = resume;
 	}
 	
+	public CandidateDetails(Long id, Date dateOfBirth, String gender, String bio, String country, String city,
+			byte[] profilePicture, byte[] resume, List<Education> education,
+			List<Project> project, List<Experience> experience, List<Skills> skills) {
+		super();
+		this.id = id;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.bio = bio;
+		this.country = country;
+		this.city = city;
+		this.profilePicture = profilePicture;
+		this.resume = resume;
+		this.applications = applications;
+		this.education = education;
+		this.project = project;
+		this.experience = experience;
+		this.skills = skills;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -82,6 +111,37 @@ public class CandidateDetails {
 	}
 	public void setApplications(List<ApplicationDetails> applications) {
 		this.applications = applications;
+	}
+	public List<Education> getEducation() {
+		return education;
+	}
+
+	public void setEducation(List<Education> education) {
+		this.education = education;
+	}
+
+	public List<Project> getProject() {
+		return project;
+	}
+
+	public void setProject(List<Project> project) {
+		this.project = project;
+	}
+
+	public List<Experience> getExperience() {
+		return experience;
+	}
+
+	public void setExperience(List<Experience> experience) {
+		this.experience = experience;
+	}
+
+	public List<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skills> skills) {
+		this.skills = skills;
 	}
 		
 }

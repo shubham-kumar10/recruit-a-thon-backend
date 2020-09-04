@@ -2,16 +2,12 @@ package com.recruitathon.suitup.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -40,25 +36,18 @@ public class Project {
 	
 	@Column(name="ongoing")
 	private boolean ongoing;
-	
-	@ManyToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="candidate_id")
-	@NotNull
-	private Candidate candidate;
 
 	public Project() {
 		super();
 	}
 
-	public Project(String name, String description, Date startDate, Date endDate, boolean ongoing,
-			@NotNull Candidate candidate) {
+	public Project(String name, String description, Date startDate, Date endDate, boolean ongoing) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.ongoing = ongoing;
-		this.candidate = candidate;
+		this.ongoing = ongoing;;
 	}
 
 	public Long getId() {
@@ -109,19 +98,10 @@ public class Project {
 		this.ongoing = ongoing;
 	}
 
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -140,11 +120,6 @@ public class Project {
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -178,7 +153,7 @@ public class Project {
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", name=" + name + ", description=" + description + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", ongoing=" + ongoing + ", candidate=" + candidate + "]";
+				+ ", endDate=" + endDate + ", ongoing=" + ongoing +"]";
 	}
 
 }
