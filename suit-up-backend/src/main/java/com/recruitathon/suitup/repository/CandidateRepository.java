@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.model.User;
 
-public interface CandidateRepository extends JpaRepository<Candidate, Integer>{
+public interface CandidateRepository extends JpaRepository<Candidate, Long>{
 
 	Candidate findByUser(User user);
 	

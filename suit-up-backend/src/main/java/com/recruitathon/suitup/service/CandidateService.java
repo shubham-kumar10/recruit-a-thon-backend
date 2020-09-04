@@ -1,13 +1,9 @@
 package com.recruitathon.suitup.service;
 
-import java.sql.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.recruitathon.suitup.dto.ApplicationDetails;
 import com.recruitathon.suitup.dto.CandidateDetails;
 import com.recruitathon.suitup.exception.UserDoesNotExistsException;
 import com.recruitathon.suitup.model.Candidate;
@@ -24,8 +20,8 @@ public class CandidateService {
 	@Autowired
 	UserRepository userRepository;
 
-	public CandidateDetails getCandidateDetails(String username) {
-		User user = userRepository.findByUserName(username);
+	public CandidateDetails getCandidateDetails(long id) {
+		User user = userRepository.findById(id);
 		Candidate candidate = candidateRepository.findByUser(user);
 		CandidateDetails candidateDetails = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(),
 				candidate.getGender(), candidate.getBio(), candidate.getCountry(), candidate.getCity(),
@@ -34,12 +30,15 @@ public class CandidateService {
 	}
 
 	@Transactional
-	public Candidate addDetails(Candidate candidate, long id) throws UserDoesNotExistsException {
+	public CandidateDetails addDetails(Candidate candidate, long id) throws UserDoesNotExistsException {
 		User user = userRepository.findById(id);
 		if (user != null) {
 			candidate.setUser(user);
 			candidateRepository.save(candidate);
-			return candidateRepository.findByUser(user);
+			Candidate newCandidate = candidateRepository.findByUser(user);
+			return new CandidateDetails(newCandidate.getId(), newCandidate.getDateOfBirth(),
+					newCandidate.getGender(), newCandidate.getBio(), newCandidate.getCountry(), newCandidate.getCity(),
+					newCandidate.getProfilePicture(), newCandidate.getResume());
 		} else
 			throw new UserDoesNotExistsException("The given id is not mapped to a User");
 	}
@@ -48,6 +47,12 @@ public class CandidateService {
 	public byte[] addResume(Candidate candidate) {
 		candidateRepository.save(candidate);
 		return candidateRepository.findByUser(candidate.getUser()).getResume();
+	}
+	
+	@Transactional
+	public byte[] addProfilePicture(Candidate candidate) {
+		candidateRepository.save(candidate);
+		return candidateRepository.findByUser(candidate.getUser()).getProfilePicture();
 	}
 
 }

@@ -2,15 +2,6 @@ package com.recruitathon.suitup.dto;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-
 import com.recruitathon.suitup.model.Candidate;
 
 public class EducationDetails {

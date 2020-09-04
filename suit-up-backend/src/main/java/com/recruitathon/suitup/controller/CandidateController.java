@@ -20,13 +20,13 @@ public class CandidateController {
 	@Autowired
 	CandidateService candidateService;
 
-	@GetMapping("/{username}")
-	public CandidateDetails getCandidateDetails(@PathVariable String username) {
-		return candidateService.getCandidateDetails(username);
+	@GetMapping("/{id}")
+	public CandidateDetails getCandidateDetails(@PathVariable long id) {
+		return candidateService.getCandidateDetails(id);
 	}
 	
 	@PostMapping("/{id}")
-	public Candidate addDetails(@RequestBody Candidate candidate, @PathVariable long id ) throws UserDoesNotExistsException {
+	public CandidateDetails addDetails(@RequestBody Candidate candidate, @PathVariable long id ) throws UserDoesNotExistsException {
 		return candidateService.addDetails(candidate,id);
 	}
 	

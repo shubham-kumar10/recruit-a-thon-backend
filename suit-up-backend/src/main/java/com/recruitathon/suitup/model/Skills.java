@@ -32,6 +32,13 @@ public class Skills {
 	@Column(name="rating")
 	private int rating;
 
+	public Skills(@NotNull Candidate candidate, String skillName, int rating) {
+		super();
+		this.candidate = candidate;
+		this.skillName = skillName;
+		this.rating = rating;
+	}
+
 	public Long getId() {
 		return id;
 	}
