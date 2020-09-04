@@ -32,6 +32,10 @@ public class Skills {
 	@Column(name="rating")
 	private int rating;
 
+	public Skills() {
+		super();
+	}
+
 	public Skills(@NotNull Candidate candidate, String skillName, int rating) {
 		super();
 		this.candidate = candidate;

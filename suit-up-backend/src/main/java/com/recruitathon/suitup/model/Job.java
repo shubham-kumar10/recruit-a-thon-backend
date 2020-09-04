@@ -58,7 +58,10 @@ public class Job {
 	@JoinColumn(name="process_id")
 	private HiringProcess process;
 	
-	
+	public Job() {
+		super();
+	}
+
 	public Long getJobId() {
 		return jobId;
 	}

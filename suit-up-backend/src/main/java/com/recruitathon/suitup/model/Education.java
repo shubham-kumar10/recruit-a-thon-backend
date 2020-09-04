@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="education")
 public class Education {
@@ -31,9 +33,11 @@ public class Education {
 	private String institution;
 	
 	@Column(name="start_date")
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date startDate;
 	
 	@Column(name="end_date")
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date endDate;
 	
 	@Column(name="degree")
@@ -51,6 +55,10 @@ public class Education {
 		this.endDate = endDate;
 		this.degree = degree;
 		this.description = description;
+	}
+
+	public Education() {
+		super();
 	}
 
 	public Long getId() {

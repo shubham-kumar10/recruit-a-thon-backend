@@ -68,6 +68,10 @@ public class InterviewRound {
 		this.description = description;
 	}
 
+	public InterviewRound() {
+		super();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

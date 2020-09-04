@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="experience")
 public class Experience {
@@ -31,9 +33,11 @@ public class Experience {
 	private String organization;
 	
 	@Column(name="start_date")
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date startDate;
 	
 	@Column(name="end_date")
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date endDate;
 	
 	@Column(name="designation")
@@ -47,6 +51,10 @@ public class Experience {
 	
 	@Column(name="current")
 	private boolean current;
+
+	public Experience() {
+		super();
+	}
 
 	public Experience(@NotNull Candidate candidate, String organization, Date startDate, Date endDate,
 			String designation, String type, String location, boolean current) {

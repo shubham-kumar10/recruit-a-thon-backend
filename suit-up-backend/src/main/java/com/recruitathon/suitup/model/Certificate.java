@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="certificate")
 public class Certificate {
@@ -34,7 +36,12 @@ public class Certificate {
 	private String issuedBy;
 	
 	@Column(name="expiry")
+	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
 	private Date expiryDate;
+
+	public Certificate() {
+		super();
+	}
 
 	public Long getId() {
 		return id;

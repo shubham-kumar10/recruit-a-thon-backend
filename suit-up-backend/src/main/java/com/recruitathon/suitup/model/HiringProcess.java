@@ -36,6 +36,11 @@ public class HiringProcess {
 	private List<InterviewRound> rounds = new ArrayList<InterviewRound>();
 
 	
+	public HiringProcess() {
+		super();
+	}
+
+
 	public List<InterviewRound> getRounds() {
 		return rounds;
 	}
