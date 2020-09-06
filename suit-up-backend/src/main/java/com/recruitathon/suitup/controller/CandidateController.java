@@ -21,8 +21,8 @@ public class CandidateController {
 	CandidateService candidateService;
 
 	@GetMapping("/{id}")
-	public CandidateDetails getCandidateDetails(@PathVariable long id) {
-		return candidateService.getCandidateDetails(id);
+	public CandidateDetails getCandidateDetails(@PathVariable long userId) {
+		return candidateService.getCandidateDetails(userId);
 	}
 	
 	@PostMapping("/{id}")

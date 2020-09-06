@@ -49,7 +49,6 @@ public class CandidateDetails {
 		this.city = city;
 		this.profilePicture = profilePicture;
 		this.resume = resume;
-		this.applications = applications;
 		this.education = education;
 		this.project = project;
 		this.experience = experience;

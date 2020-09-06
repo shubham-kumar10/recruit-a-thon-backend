@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recruitathon.suitup.dto.UserDetails;
 import com.recruitathon.suitup.model.User;
 import com.recruitathon.suitup.repository.UserRepository;
 
@@ -27,27 +28,24 @@ public class AuthenticationController {
 	UserRepository UserRepository;
 
 	@GetMapping("/authenticate")
-	public Map<String, String> authenticate(@RequestHeader("Authorization") String authHeader) {
+	public UserDetails authenticate(@RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Start OF authenticate()");
 		LOGGER.info(authHeader);
 		System.out.println(authHeader);
 		Map<String, String> authmap = new HashMap<String, String>();
-		/*Extract Username from header*/
+		/* Extract Username from header */
 		String username = getUser(authHeader);
 		authmap.put("username", username);
 		User user = UserRepository.findByUserName(username);
-		//String role = user.getRole().equals("C") ? "Candidate" : user.getRole().equals("Recruiter") ? "Mentor":"";
-		
-		/* Adding user details to auth-map */
-		authmap.put("id", user.getId().toString());
-		authmap.put("firstname", user.getFirstName());
-		authmap.put("lastname", user.getLastName());
-		authmap.put("token", generateJwt(getUser(authHeader)));
-		//authmap.put("role", role);
-		
+		// String role = user.getRole().equals("C") ? "Candidate" :
+		// user.getRole().equals("Recruiter") ? "Mentor":"";
+
+		// authmap.put("role", role);
+		String token = generateJwt(getUser(authHeader));
 		LOGGER.info("End of authenticate()");
-		
-		return authmap;
+
+		return new UserDetails(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName(), token,
+				user.getRole(), user.getContactNumber(), user.getConfirmedSignUp());
 	}
 
 	private String getUser(String authHeader) {
@@ -58,7 +56,7 @@ public class AuthenticationController {
 	}
 
 	private String generateJwt(String user) {
-		
+
 		JwtBuilder builder = Jwts.builder();
 		builder.setSubject(user);
 

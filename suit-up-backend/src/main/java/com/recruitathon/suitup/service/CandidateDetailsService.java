@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.model.Education;
@@ -18,6 +19,7 @@ import com.recruitathon.suitup.repository.ProjectRepository;
 import com.recruitathon.suitup.repository.SkillsRepository;
 
 @Service
+@Transactional
 public class CandidateDetailsService {
 
 	@Autowired

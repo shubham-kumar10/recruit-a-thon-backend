@@ -24,7 +24,7 @@ public class CandidateService {
 	CandidateDetailsService candidateDetails;
 
 	public CandidateDetails getCandidateDetails(long id) {
-		User user = userRepository.findById(id);
+		User user = userRepository.findById(id).get();
 		Candidate candidate = candidateRepository.findByUser(user);
 		CandidateDetails candidateDetails = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(),
 				candidate.getGender(), candidate.getBio(), candidate.getCountry(), candidate.getCity(),
@@ -35,14 +35,15 @@ public class CandidateService {
 
 	@Transactional
 	public CandidateDetails addDetails(Candidate candidate, long id) throws UserDoesNotExistsException {
-		User user = userRepository.findById(id);
+		User user = userRepository.findById(id).get();
 		if (user != null) {
 			candidate.setUser(user);
 			candidateRepository.save(candidate);
 			Candidate newCandidate = candidateRepository.findByUser(user);
 			return new CandidateDetails(newCandidate.getId(), newCandidate.getDateOfBirth(), newCandidate.getGender(),
 					newCandidate.getBio(), newCandidate.getCountry(), newCandidate.getCity(),
-					newCandidate.getProfilePicture(), newCandidate.getResume());
+					newCandidate.getProfilePicture(), newCandidate.getResume(),newCandidate.getEducation(),
+					newCandidate.getProject(), newCandidate.getExperience(), newCandidate.getSkills());
 		} else
 			throw new UserDoesNotExistsException("The given id is not mapped to a User");
 	}

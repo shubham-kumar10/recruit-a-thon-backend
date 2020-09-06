@@ -7,7 +7,24 @@ public class UserDetails {
 	private String username;
 	private String token;
 	private String role;
+	private long contactnumber;
+	private boolean confirmedSignup;
 	
+	public UserDetails() {
+		super();
+	}
+	public UserDetails(long id, String firstname, String lastname, String username, String token, String role,
+			long contactnumber, boolean confirmedSignup) {
+		super();
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.token = token;
+		this.role = role;
+		this.contactnumber = contactnumber;
+		this.confirmedSignup = confirmedSignup;
+	}
 	public long getId() {
 		return id;
 	}
@@ -44,4 +61,17 @@ public class UserDetails {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public long getContactnumber() {
+		return contactnumber;
+	}
+	public void setContactnumber(long contactnumber) {
+		this.contactnumber = contactnumber;
+	}
+	public boolean isConfirmedSignup() {
+		return confirmedSignup;
+	}
+	public void setConfirmedSignup(boolean confirmedSignup) {
+		this.confirmedSignup = confirmedSignup;
+	}
+	
 }
