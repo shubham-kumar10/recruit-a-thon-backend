@@ -1,7 +1,6 @@
 package com.recruitathon.suitup.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,43 +9,54 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="applications")
+@Table(name = "applications")
 public class Application {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "application_id")
 	private long applicationId;
-	
+
 	@Column(name = "applied_on")
 	private Date appliedOn;
-	
-	@Column(name="status")
+
+	@Column(name = "status")
 	private String status;
-	
-	@Column(name="complete")
+
+	@Column(name = "complete")
 	private boolean isComplete;
-	
-	@Column(name="skillMatch")
+
+	@Column(name = "skillMatch")
 	private double skillMatch;
-	
-	@Column(name="percentile")
+
+	@Column(name = "percentile")
 	private double percentile;
-	
-	@OneToMany(cascade={CascadeType.ALL})
-	@JoinColumn(name="job_app_fk")
-	private List<Job> job;
-	
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "job_app_fk")
+	private Job job;
+
 	public Application() {
 		super();
 	}
 
-	public Application(long id,Date appliedOn, String status, boolean isComplete, double skillMatch, double percentile,
-			List<Job> job) {
+	public Application(Date appliedOn, String status, boolean isComplete, double skillMatch, double percentile,
+			Job job) {
+		super();
+		this.appliedOn = appliedOn;
+		this.status = status;
+		this.isComplete = isComplete;
+		this.skillMatch = skillMatch;
+		this.percentile = percentile;
+		this.job = job;
+	}
+
+	public Application(long id, Date appliedOn, String status, boolean isComplete, double skillMatch, double percentile,
+			Job job) {
 		super();
 		this.applicationId = id;
 		this.appliedOn = appliedOn;
@@ -84,25 +94,32 @@ public class Application {
 	public Date getAppliedOn() {
 		return appliedOn;
 	}
+
 	public void setAppliedOn(Date appliedOn) {
 		this.appliedOn = appliedOn;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public boolean isComplete() {
 		return isComplete;
 	}
+
 	public void setComplete(boolean isComplete) {
 		this.isComplete = isComplete;
 	}
-	public List<Job> getJob() {
+
+	public Job getJob() {
 		return job;
 	}
-	public void setJob(List<Job> job) {
+
+	public void setJob(Job job) {
 		this.job = job;
 	}
 

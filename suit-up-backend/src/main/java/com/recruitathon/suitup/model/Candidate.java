@@ -51,6 +51,10 @@ public class Candidate {
 	private byte resume[];
 	
 	@OneToMany(cascade={CascadeType.ALL})
+	@JoinColumn(name="app_fk")
+	private List<Application> applications;
+	
+	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="edu_fk")
 	private List<Education> education;
 	
@@ -71,7 +75,8 @@ public class Candidate {
 	}
 
 	public Candidate(Long id, User user, Date dateOfBirth, String gender, String bio, String country, String city,
-			byte[] profilePicture, byte[] resume) {
+			byte[] profilePicture, byte[] resume, List<Application> applications, List<Education> education,
+			List<Experience> experience, List<Project> project, List<Skills> skills) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -82,6 +87,19 @@ public class Candidate {
 		this.city = city;
 		this.profilePicture = profilePicture;
 		this.resume = resume;
+		this.applications = applications;
+		this.education = education;
+		this.experience = experience;
+		this.project = project;
+		this.skills = skills;
+	}
+
+	public List<Application> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(List<Application> applications) {
+		this.applications = applications;
 	}
 
 	public Long getId() {
@@ -192,6 +210,7 @@ public class Candidate {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((applications == null) ? 0 : applications.hashCode());
 		result = prime * result + ((bio == null) ? 0 : bio.hashCode());
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
@@ -217,6 +236,11 @@ public class Candidate {
 		if (getClass() != obj.getClass())
 			return false;
 		Candidate other = (Candidate) obj;
+		if (applications == null) {
+			if (other.applications != null)
+				return false;
+		} else if (!applications.equals(other.applications))
+			return false;
 		if (bio == null) {
 			if (other.bio != null)
 				return false;
@@ -283,8 +307,9 @@ public class Candidate {
 	public String toString() {
 		return "Candidate [id=" + id + ", user=" + user + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender
 				+ ", bio=" + bio + ", country=" + country + ", city=" + city + ", profilePicture="
-				+ Arrays.toString(profilePicture) + ", resume=" + Arrays.toString(resume) + ", education=" + education
-				+ ", experience=" + experience + ", project=" + project + ", skills=" + skills + "]";
+				+ Arrays.toString(profilePicture) + ", resume=" + Arrays.toString(resume) + ", applications="
+				+ applications + ", education=" + education + ", experience=" + experience + ", project=" + project
+				+ ", skills=" + skills + "]";
 	}
 
 	
