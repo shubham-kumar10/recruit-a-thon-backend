@@ -6,10 +6,9 @@ import com.recruitathon.suitup.model.User;
 
 
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Long>{
 
 	User findByUserName(String username);
-	User findById(Long id);
 	boolean existsByUserName(String username);
 
 }

@@ -25,7 +25,7 @@ public class Candidate {
 	@Column(name = "candidate_id")
 	private Long id;
 	
-	@OneToOne(cascade={CascadeType.MERGE})
+	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="user_id")
 	private User user;
 
@@ -50,19 +50,19 @@ public class Candidate {
 	@Column(name = "resume", length = 1000)
 	private byte resume[];
 	
-	@OneToMany(cascade={CascadeType.MERGE})
+	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="edu_fk")
 	private List<Education> education;
 	
-	@OneToMany(cascade={CascadeType.MERGE})
+	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="exp_fk")
 	private List<Experience> experience;
 	
-	@OneToMany(cascade={CascadeType.MERGE})
+	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="project_fk")
 	private List<Project> project;
 	
-	@OneToMany(cascade={CascadeType.MERGE})
+	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="skill_fk")
 	private List<Skills> skills;
 

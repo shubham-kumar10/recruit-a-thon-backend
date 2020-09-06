@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "user")
@@ -31,7 +30,6 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Positive(message = "Contact Number should be a positive value")
 	@Column(name = "contact_number")
 	private Long contactNumber;
 
@@ -52,7 +50,6 @@ public class User {
 
 	@Column(name = "reset_password_date")
 	private Date resetPasswordDate;
-	
 
 	public User() {
 		super();
@@ -154,6 +151,24 @@ public class User {
 		this.resetPasswordDate = resetPasswordDate;
 	}
 
+	public User(Long id, String userName, String password, String firstName, String lastName, Long contactNumber,
+			String regCode, String role, Boolean active, Boolean confirmedSignUp, Boolean resetPassword,
+			Date resetPasswordDate) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.contactNumber = contactNumber;
+		this.regCode = regCode;
+		this.role = role;
+		this.active = active;
+		this.confirmedSignUp = confirmedSignUp;
+		this.resetPassword = resetPassword;
+		this.resetPasswordDate = resetPasswordDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -245,7 +260,6 @@ public class User {
 		return true;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
