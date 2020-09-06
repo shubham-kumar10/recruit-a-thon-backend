@@ -2,16 +2,12 @@ package com.recruitathon.suitup.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,11 +19,6 @@ public class Certificate {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "certificate_id")
 	private Long id;
-	
-	@ManyToOne(cascade={CascadeType.MERGE})
-	@JoinColumn(name="candidate_id")
-	@NotNull
-	private Candidate candidate;
 	
 	@Column(name="name")
 	private String name;
@@ -49,14 +40,6 @@ public class Certificate {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
 	}
 
 	public String getName() {
@@ -87,7 +70,6 @@ public class Certificate {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
 		result = prime * result + ((expiryDate == null) ? 0 : expiryDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((issuedBy == null) ? 0 : issuedBy.hashCode());
@@ -104,11 +86,6 @@ public class Certificate {
 		if (getClass() != obj.getClass())
 			return false;
 		Certificate other = (Certificate) obj;
-		if (candidate == null) {
-			if (other.candidate != null)
-				return false;
-		} else if (!candidate.equals(other.candidate))
-			return false;
 		if (expiryDate == null) {
 			if (other.expiryDate != null)
 				return false;
@@ -134,7 +111,7 @@ public class Certificate {
 
 	@Override
 	public String toString() {
-		return "Certificate [id=" + id + ", candidate=" + candidate + ", name=" + name + ", issuedBy=" + issuedBy
+		return "Certificate [id=" + id  +  "name=" + name + ", issuedBy=" + issuedBy
 				+ ", expiryDate=" + expiryDate + "]";
 	}
 	

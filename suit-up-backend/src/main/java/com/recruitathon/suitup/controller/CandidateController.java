@@ -20,7 +20,7 @@ public class CandidateController {
 	@Autowired
 	CandidateService candidateService;
 
-	@GetMapping("/{id}")
+	@GetMapping("/{userId}")
 	public CandidateDetails getCandidateDetails(@PathVariable long userId) {
 		return candidateService.getCandidateDetails(userId);
 	}

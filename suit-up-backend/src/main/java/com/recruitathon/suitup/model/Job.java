@@ -1,6 +1,7 @@
 package com.recruitathon.suitup.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -54,6 +56,16 @@ public class Job {
 	@Column(name="position")
 	private int position;
 	
+	@OneToMany(cascade={CascadeType.ALL})
+	@JoinColumn(name="job_skills_fk")
+	private List<JobRequirement> skillsRequired;
+	
+	@Column(name="min_exp")
+	private double minimumExperience;
+	
+	@Column(name="min_education")
+	private String minimumEducation;
+	
 	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="process_id")
 	private HiringProcess process;
@@ -61,6 +73,29 @@ public class Job {
 	public Job() {
 		super();
 	}
+
+	public Job(Long jobId, String companyName, Date postedOn, String description, String location,
+			String pointOfContact, String compensation, boolean travelRequired, int travelPercent, int vacancies,
+			int position, List<JobRequirement> skillsRequired, double minimumExperience, String minimumEducation,
+			HiringProcess process) {
+		super();
+		this.jobId = jobId;
+		this.companyName = companyName;
+		this.postedOn = postedOn;
+		this.description = description;
+		this.location = location;
+		this.pointOfContact = pointOfContact;
+		this.compensation = compensation;
+		this.travelRequired = travelRequired;
+		this.travelPercent = travelPercent;
+		this.vacancies = vacancies;
+		this.position = position;
+		this.skillsRequired = skillsRequired;
+		this.minimumExperience = minimumExperience;
+		this.minimumEducation = minimumEducation;
+		this.process = process;
+	}
+
 
 	public Long getJobId() {
 		return jobId;
@@ -159,6 +194,30 @@ public class Job {
 		this.pointOfContact = pointOfContact;
 	}
 
+	public List<JobRequirement> getSkillsRequired() {
+		return skillsRequired;
+	}
+
+	public void setSkillsRequired(List<JobRequirement> skillsRequired) {
+		this.skillsRequired = skillsRequired;
+	}
+
+	public double getMinimumExperience() {
+		return minimumExperience;
+	}
+
+	public void setMinimumExperience(double minimumExperience) {
+		this.minimumExperience = minimumExperience;
+	}
+
+	public String getMinimumEducation() {
+		return minimumEducation;
+	}
+
+	public void setMinimumEducation(String minimumEducation) {
+		this.minimumEducation = minimumEducation;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -168,10 +227,15 @@ public class Job {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((jobId == null) ? 0 : jobId.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((minimumEducation == null) ? 0 : minimumEducation.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(minimumExperience);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((pointOfContact == null) ? 0 : pointOfContact.hashCode());
 		result = prime * result + position;
 		result = prime * result + ((postedOn == null) ? 0 : postedOn.hashCode());
 		result = prime * result + ((process == null) ? 0 : process.hashCode());
+		result = prime * result + ((skillsRequired == null) ? 0 : skillsRequired.hashCode());
 		result = prime * result + travelPercent;
 		result = prime * result + (travelRequired ? 1231 : 1237);
 		result = prime * result + vacancies;
@@ -212,6 +276,13 @@ public class Job {
 				return false;
 		} else if (!location.equals(other.location))
 			return false;
+		if (minimumEducation == null) {
+			if (other.minimumEducation != null)
+				return false;
+		} else if (!minimumEducation.equals(other.minimumEducation))
+			return false;
+		if (Double.doubleToLongBits(minimumExperience) != Double.doubleToLongBits(other.minimumExperience))
+			return false;
 		if (pointOfContact == null) {
 			if (other.pointOfContact != null)
 				return false;
@@ -229,6 +300,11 @@ public class Job {
 				return false;
 		} else if (!process.equals(other.process))
 			return false;
+		if (skillsRequired == null) {
+			if (other.skillsRequired != null)
+				return false;
+		} else if (!skillsRequired.equals(other.skillsRequired))
+			return false;
 		if (travelPercent != other.travelPercent)
 			return false;
 		if (travelRequired != other.travelRequired)
@@ -243,7 +319,9 @@ public class Job {
 		return "Job [jobId=" + jobId + ", companyName=" + companyName + ", postedOn=" + postedOn + ", description="
 				+ description + ", location=" + location + ", pointOfContact=" + pointOfContact + ", compensation="
 				+ compensation + ", travelRequired=" + travelRequired + ", travelPercent=" + travelPercent
-				+ ", vacancies=" + vacancies + ", position=" + position + ", process=" + process + "]";
+				+ ", vacancies=" + vacancies + ", position=" + position + ", skillsRequired=" + skillsRequired
+				+ ", minimumExperience=" + minimumExperience + ", minimumEducation=" + minimumEducation + ", process="
+				+ process + "]";
 	}
 	
 }
