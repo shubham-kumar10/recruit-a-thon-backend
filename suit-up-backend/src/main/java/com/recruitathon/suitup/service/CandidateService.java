@@ -44,8 +44,8 @@ public class CandidateService {
 		Candidate candidate = candidateRepository.findByUser(user);
 		CandidateDetails candidateDetails = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(),
 				candidate.getGender(), candidate.getBio(), candidate.getCountry(), candidate.getCity(),
-				candidate.getProfilePicture(), candidate.getResume(), candidate.getEducation(), candidate.getProject(),
-				candidate.getExperience(), candidate.getSkills());
+				candidate.getProfilePicture(), candidate.getResume(), candidate.getApplications(),
+				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
 		return candidateDetails;
 	}
 
@@ -77,7 +77,15 @@ public class CandidateService {
 	}
 
 	@Transactional
-	public boolean submitApplication(long canId, long jobId)
+	public Application withdrawApplication(long appId) {
+		Application application = applicationRepository.findById(appId).get();
+		application.setStatus("Withdrawn");
+		application.setComplete(true);
+		return applicationRepository.save(application);
+	}
+
+	@Transactional
+	public CandidateDetails submitApplication(long canId, long jobId, String status)
 			throws CandidateDoesNotExistException, JobDoesNotExistException {
 		Optional<Candidate> opCandidate = candidateRepository.findById(canId);
 		Optional<Job> job = jobRepository.findById(jobId);
@@ -86,21 +94,18 @@ public class CandidateService {
 		} else if (!job.isPresent()) {
 			throw new JobDoesNotExistException("There is not opening with Job as id" + jobId);
 		} else {
-			Application application = new Application(new Date(), "Applied", false, 0.0, 0.0, job.get());
+			Date applicationDate = status.equals("Applied")?new Date(): null;
+			Application application = new Application(applicationDate, status, false, 0.0, 0.0, job.get());
 			Candidate candidate = opCandidate.get();
 			List<Application> applicationList = candidate.getApplications();
 			applicationList.add(application);
 			candidate.setApplications(applicationList);
-			candidateRepository.save(candidate);
-			return true;
+			candidate = candidateRepository.save(candidate);
+			return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
+					candidate.getBio(), candidate.getCountry(), candidate.getCity(), candidate.getProfilePicture(),
+					candidate.getResume(), candidate.getApplications(), candidate.getEducation(),
+					candidate.getProject(), candidate.getExperience(), candidate.getSkills());
 		}
-	}
-
-	public Application withdrawApplication(long appId) {
-		Application application = applicationRepository.findById(appId).get();
-		application.setStatus("Withdrawn");
-		application.setComplete(true);
-		return applicationRepository.save(application);
 	}
 
 }

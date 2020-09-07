@@ -3,6 +3,7 @@ package com.recruitathon.suitup.dto;
 import java.sql.Date;
 import java.util.List;
 
+import com.recruitathon.suitup.model.Application;
 import com.recruitathon.suitup.model.Education;
 import com.recruitathon.suitup.model.Experience;
 import com.recruitathon.suitup.model.Project;
@@ -18,7 +19,7 @@ public class CandidateDetails {
 	private String city;
 	private byte profilePicture[];
 	private byte resume[];
-	private List<ApplicationDetails> applications;
+	private List<Application> applications;
 	private List<Education> education;
 	private List<Project> project;
 	private List<Experience> experience;
@@ -55,7 +56,24 @@ public class CandidateDetails {
 		this.skills = skills;
 	}
 
-
+	public CandidateDetails(Long id, Date dateOfBirth, String gender, String bio, String country, String city,
+			byte[] profilePicture, byte[] resume, List<Application> applications, List<Education> education,
+			List<Project> project, List<Experience> experience, List<Skills> skills) {
+		super();
+		this.id = id;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.bio = bio;
+		this.country = country;
+		this.city = city;
+		this.profilePicture = profilePicture;
+		this.resume = resume;
+		this.applications = applications;
+		this.education = education;
+		this.project = project;
+		this.experience = experience;
+		this.skills = skills;
+	}
 
 	public Long getId() {
 		return id;
@@ -105,10 +123,10 @@ public class CandidateDetails {
 	public void setResume(byte[] resume) {
 		this.resume = resume;
 	}
-	public List<ApplicationDetails> getApplications() {
+	public List<Application> getApplications() {
 		return applications;
 	}
-	public void setApplications(List<ApplicationDetails> applications) {
+	public void setApplications(List<Application> applications) {
 		this.applications = applications;
 	}
 	public List<Education> getEducation() {
