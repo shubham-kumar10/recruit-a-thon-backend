@@ -16,7 +16,6 @@ public class GlobalExceptionHandler {
 		error.setTimestamp(LocalDateTime.now());
 		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-
 	}
 	
 	@ExceptionHandler(value = InvalidCredentialsException.class)
@@ -25,7 +24,37 @@ public class GlobalExceptionHandler {
 		error.setTimestamp(LocalDateTime.now());
 		error.setStatus((HttpStatus.UNAUTHORIZED.value()));
 		return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
-
+	}
+	
+	@ExceptionHandler(value = CandidateAlreadyExistException.class)
+	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(CandidateAlreadyExistException e) {
+		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		error.setTimestamp(LocalDateTime.now());
+		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
+		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(value = CandidateDoesNotExistException.class)
+	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(CandidateDoesNotExistException e) {
+		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		error.setTimestamp(LocalDateTime.now());
+		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
+		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(value = JobDoesNotExistException.class)
+	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(JobDoesNotExistException e) {
+		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		error.setTimestamp(LocalDateTime.now());
+		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
+		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(value = UserDoesNotExistsException.class)
+	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(UserDoesNotExistsException e) {
+		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		error.setTimestamp(LocalDateTime.now());
+		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
+		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
