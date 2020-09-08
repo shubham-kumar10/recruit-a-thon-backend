@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
+import com.recruitathon.suitup.exception.ApplicationAlreadyExistsException;
 import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
 import com.recruitathon.suitup.exception.JobDoesNotExistException;
 import com.recruitathon.suitup.model.Application;
@@ -19,7 +20,7 @@ public class ApplicationController {
 
 	@PostMapping("/apply/{canId}/{jobId}")
 	public CandidateDetails submitApplication(@PathVariable long canId, @PathVariable long jobId)
-			throws CandidateDoesNotExistException, JobDoesNotExistException {
+			throws CandidateDoesNotExistException, JobDoesNotExistException, ApplicationAlreadyExistsException {
 		return candidateService.submitApplication(canId, jobId,"Applied");
 	}
 	
@@ -31,7 +32,7 @@ public class ApplicationController {
 	
 	@PostMapping("/save/{canId}/{jobId}")
 	public CandidateDetails saveApplication(@PathVariable long canId, @PathVariable long jobId)
-			throws CandidateDoesNotExistException, JobDoesNotExistException {
+			throws CandidateDoesNotExistException, JobDoesNotExistException, ApplicationAlreadyExistsException {
 		return candidateService.submitApplication(canId, jobId,"Saved");
 	}
 }

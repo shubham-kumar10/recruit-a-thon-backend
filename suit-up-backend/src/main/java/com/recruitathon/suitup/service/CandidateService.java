@@ -1,14 +1,17 @@
 package com.recruitathon.suitup.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
+import com.recruitathon.suitup.exception.ApplicationAlreadyExistsException;
+import com.recruitathon.suitup.exception.CandidateAlreadyExistException;
 import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
 import com.recruitathon.suitup.exception.JobDoesNotExistException;
 import com.recruitathon.suitup.exception.UserDoesNotExistsException;
@@ -39,29 +42,35 @@ public class CandidateService {
 	@Autowired
 	CandidateDetailsService candidateDetails;
 
+	public CandidateDetails candidateDetailsInit(Candidate candidate) {
+		return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
+				candidate.getBio(), candidate.getCountry(), candidate.getCity(),
+				FileService.decompressBytes(candidate.getProfilePicture()),
+				FileService.decompressBytes(candidate.getResume()), candidate.getApplications(),
+				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
+	}
+
 	public CandidateDetails getCandidateDetails(long id) {
 		User user = userRepository.findById(id).get();
 		Candidate candidate = candidateRepository.findByUser(user);
-		CandidateDetails candidateDetails = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(),
-				candidate.getGender(), candidate.getBio(), candidate.getCountry(), candidate.getCity(),
-				candidate.getProfilePicture(), candidate.getResume(), candidate.getApplications(),
-				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
-		return candidateDetails;
+		return candidateDetailsInit(candidate);
 	}
 
 	@Transactional
-	public CandidateDetails addDetails(Candidate candidate, long id) throws UserDoesNotExistsException {
+	public CandidateDetails addDetails(Candidate candidate, long id)
+			throws UserDoesNotExistsException, CandidateAlreadyExistException {
 		User user = userRepository.findById(id).get();
-		if (user != null) {
+		if (user == null)
+			throw new UserDoesNotExistsException("The given id is not mapped to a User");
+		else if (candidateRepository.existsByUser(user)) {
+			throw new CandidateAlreadyExistException("Candidate details already exists for this user.");
+		} else {
 			candidate.setUser(user);
 			candidateRepository.save(candidate);
 			Candidate newCandidate = candidateRepository.findByUser(user);
-			return new CandidateDetails(newCandidate.getId(), newCandidate.getDateOfBirth(), newCandidate.getGender(),
-					newCandidate.getBio(), newCandidate.getCountry(), newCandidate.getCity(),
-					newCandidate.getProfilePicture(), newCandidate.getResume(), newCandidate.getEducation(),
-					newCandidate.getProject(), newCandidate.getExperience(), newCandidate.getSkills());
-		} else
-			throw new UserDoesNotExistsException("The given id is not mapped to a User");
+			return candidateDetailsInit(newCandidate);
+		}
+
 	}
 
 	@Transactional
@@ -86,26 +95,52 @@ public class CandidateService {
 
 	@Transactional
 	public CandidateDetails submitApplication(long canId, long jobId, String status)
-			throws CandidateDoesNotExistException, JobDoesNotExistException {
-		Optional<Candidate> opCandidate = candidateRepository.findById(canId);
-		Optional<Job> job = jobRepository.findById(jobId);
-		if (!opCandidate.isPresent()) {
+			throws CandidateDoesNotExistException, JobDoesNotExistException, ApplicationAlreadyExistsException {
+		if (!candidateRepository.findById(canId).isPresent()) {
 			throw new CandidateDoesNotExistException("The is" + canId + "is not mapped with any existing candidate.");
-		} else if (!job.isPresent()) {
+		} else if (!jobRepository.findById(jobId).isPresent()) {
 			throw new JobDoesNotExistException("There is not opening with Job as id" + jobId);
 		} else {
-			Date applicationDate = status.equals("Applied")?new Date(): null;
-			Application application = new Application(applicationDate, status, false, 0.0, 0.0, job.get());
-			Candidate candidate = opCandidate.get();
-			List<Application> applicationList = candidate.getApplications();
-			applicationList.add(application);
-			candidate.setApplications(applicationList);
-			candidate = candidateRepository.save(candidate);
-			return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
-					candidate.getBio(), candidate.getCountry(), candidate.getCity(), candidate.getProfilePicture(),
-					candidate.getResume(), candidate.getApplications(), candidate.getEducation(),
-					candidate.getProject(), candidate.getExperience(), candidate.getSkills());
+			Candidate candidate = candidateRepository.findById(canId).get();
+			Job job = jobRepository.findById(jobId).get();
+			Application application;
+			List<Application> applicationList;
+			if (!applicationRepository.existsByJob(job)) {
+				application = new Application(new Date(), status, false, 0.0, 0.0, job);
+				applicationList = candidate.getApplications();
+				applicationList.add(application);
+				candidate.setApplications(applicationList);
+				candidate = candidateRepository.save(candidate);
+			} else {
+				application = applicationRepository.findByJob(job);
+				if (application.getStatus().equals("Saved") && status.equals("Applied")) {
+					application.setStatus("Applied");
+					application.setAppliedOn(new Date());
+					candidate.getApplications().remove(candidate.getApplications().indexOf(application));
+					applicationList = candidate.getApplications();
+					applicationList.add(application);
+					candidate.setApplications(applicationList);
+				} else {
+					throw new ApplicationAlreadyExistsException("You have already applied for this job.");
+				}
+
+			}
+			return candidateDetailsInit(candidate);
 		}
+	}
+
+	@Transactional
+	public CandidateDetails uploadImage(MultipartFile file, long canId) throws IOException {
+		Candidate candidate = candidateRepository.findById(canId).get();
+		candidate.setProfilePicture(FileService.compressBytes(file.getBytes()));
+		return candidateDetailsInit(candidate);
+	}
+
+	@Transactional
+	public CandidateDetails uploadResume(MultipartFile file, long canId) throws IOException {
+		Candidate candidate = candidateRepository.findById(canId).get();
+		candidate.setResume(FileService.compressBytes(file.getBytes()));
+		return candidateDetailsInit(candidate);
 	}
 
 }

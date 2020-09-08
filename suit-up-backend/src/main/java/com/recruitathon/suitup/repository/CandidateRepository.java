@@ -8,5 +8,5 @@ import com.recruitathon.suitup.model.User;
 public interface CandidateRepository extends JpaRepository<Candidate, Long>{
 
 	Candidate findByUser(User user);
-	
+	boolean existsByUser(User user);
 }
