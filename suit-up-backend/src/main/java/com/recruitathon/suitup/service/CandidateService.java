@@ -44,9 +44,7 @@ public class CandidateService {
 
 	public CandidateDetails candidateDetailsInit(Candidate candidate) {
 		return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
-				candidate.getBio(), candidate.getCountry(), candidate.getCity(),
-				FileService.decompressBytes(candidate.getProfilePicture()),
-				FileService.decompressBytes(candidate.getResume()), candidate.getApplications(),
+				candidate.getBio(), candidate.getCountry(), candidate.getCity(), candidate.getApplications(),
 				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
 	}
 
@@ -55,6 +53,17 @@ public class CandidateService {
 		Candidate candidate = candidateRepository.findByUser(user);
 		return candidateDetailsInit(candidate);
 	}
+
+	public byte[] getProfilePicture(long id) {
+		Candidate candidate = candidateRepository.findById(id).get();
+		return FileService.decompressBytes(candidate.getProfilePicture());
+	}
+	
+	public byte[] getResume(long id) {
+		Candidate candidate = candidateRepository.findById(id).get();
+		return FileService.decompressBytes(candidate.getResume());
+	}
+
 
 	@Transactional
 	public CandidateDetails addDetails(Candidate candidate, long id)
@@ -71,18 +80,6 @@ public class CandidateService {
 			return candidateDetailsInit(newCandidate);
 		}
 
-	}
-
-	@Transactional
-	public byte[] addResume(Candidate candidate) {
-		candidateRepository.save(candidate);
-		return candidateRepository.findByUser(candidate.getUser()).getResume();
-	}
-
-	@Transactional
-	public byte[] addProfilePicture(Candidate candidate) {
-		candidateRepository.save(candidate);
-		return candidateRepository.findByUser(candidate.getUser()).getProfilePicture();
 	}
 
 	@Transactional
@@ -133,14 +130,18 @@ public class CandidateService {
 	public CandidateDetails uploadImage(MultipartFile file, long canId) throws IOException {
 		Candidate candidate = candidateRepository.findById(canId).get();
 		candidate.setProfilePicture(FileService.compressBytes(file.getBytes()));
-		return candidateDetailsInit(candidate);
+		candidateRepository.save(candidate);
+		CandidateDetails newCandidate = candidateDetailsInit(candidate);
+		newCandidate.setProfilePicture(FileService.decompressBytes(candidate.getProfilePicture()));
+		return newCandidate;
 	}
 
 	@Transactional
-	public CandidateDetails uploadResume(MultipartFile file, long canId) throws IOException {
+	public byte[] uploadResume(MultipartFile file, long canId) throws IOException {
 		Candidate candidate = candidateRepository.findById(canId).get();
 		candidate.setResume(FileService.compressBytes(file.getBytes()));
-		return candidateDetailsInit(candidate);
+		candidateRepository.save(candidate);
+		return getResume(candidate.getId());
 	}
 
 }

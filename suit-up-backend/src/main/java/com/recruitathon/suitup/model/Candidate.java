@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Table(name="candidate")
@@ -30,6 +32,7 @@ public class Candidate {
 	private User user;
 
 	@Column(name = "date_of_birth")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
 	
 	@Column(name="gender")
@@ -44,7 +47,7 @@ public class Candidate {
 	@Column(name="city")
 	private String city;
 	
-	@Column(name = "profile_pic", length = 1000)
+	@Column(name = "profile_pic", length = 1000000)
 	private byte profilePicture[];
 	
 	@Column(name = "resume", length = 1000)

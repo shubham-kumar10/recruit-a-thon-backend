@@ -36,11 +36,6 @@ public class CandidateController {
 		return candidateService.addDetails(candidate, id);
 	}
 
-	@PostMapping("/resume")
-	public byte[] addResume(@RequestBody Candidate candidate) {
-		return candidateService.addResume(candidate);
-	}
-
 	@PostMapping("/image/{canId}")
 	public CandidateDetails addProfilePicture(@PathVariable long canId, @RequestParam("imageFile") MultipartFile file)
 			throws IOException {
@@ -48,8 +43,18 @@ public class CandidateController {
 	}
 
 	@PostMapping("/resume/{canId}")
-	public CandidateDetails addResume(@PathVariable long canId, @RequestParam("imageFile") MultipartFile file)
+	public byte[] addResume(@PathVariable long canId, @RequestParam("imageFile") MultipartFile file)
 			throws IOException {
 		return candidateService.uploadResume(file, canId);
+	}
+	
+	@GetMapping("/image/{canId}")
+	public byte[] getProfilePicture(@PathVariable long canId) {
+		return candidateService.getProfilePicture(canId);
+	}
+	
+	@GetMapping("/resume/{canId}")
+	public byte[] getResume(@PathVariable long canId) {
+		return candidateService.getResume(canId);
 	}
 }
