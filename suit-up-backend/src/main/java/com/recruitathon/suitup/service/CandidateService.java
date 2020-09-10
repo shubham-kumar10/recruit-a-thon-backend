@@ -1,6 +1,7 @@
 package com.recruitathon.suitup.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
+import com.recruitathon.suitup.dto.Profile;
 import com.recruitathon.suitup.exception.ApplicationAlreadyExistsException;
 import com.recruitathon.suitup.exception.CandidateAlreadyExistException;
 import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
@@ -43,23 +45,16 @@ public class CandidateService {
 	CandidateDetailsService candidateDetails;
 
 	public CandidateDetails candidateDetailsInit(Candidate candidate) {
-		if (candidate.getProfilePicture() != null && candidate.getProfilePicture().length > 0) {
-			candidate.setProfilePicture(FileService.decompressBytes(candidate.getProfilePicture()));
-		}
-		if (candidate.getResume() != null && candidate.getResume().length > 0) {
-			candidate.setResume(FileService.decompressBytes(candidate.getResume()));
-		}
-//		CandidateDetails details =  {
-//			
-//		} catch (NullPointerException e) {}
-//		try {
-//			if (candidate.getResume() != null && candidate.getResume().length > 0) {
-//				candidate.setResume(FileService.decompressBytes(candidate.getResume()));
-//			}
-//		} catch (NullPointerException e) {}
-		return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
+		CandidateDetails details = new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
 				candidate.getBio(), candidate.getCountry(), candidate.getCity(), candidate.getApplications(),
 				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
+		if (candidate.getProfilePicture() != null && candidate.getProfilePicture().length > 0) {
+			details.setProfilePicture(FileService.decompressBytes(candidate.getProfilePicture()));
+		}
+		if (candidate.getResume() != null && candidate.getResume().length > 0) {
+			details.setResume(FileService.decompressBytes(candidate.getResume()));
+		}
+		return details;
 	}
 
 	public CandidateDetails getCandidateDetails(long id) throws CandidateDoesNotExistException {
@@ -86,7 +81,7 @@ public class CandidateService {
 	public CandidateDetails addDetails(Candidate candidate, long id)
 			throws UserDoesNotExistsException, CandidateAlreadyExistException {
 		if (!userRepository.findById(id).isPresent())
-			throw new UserDoesNotExistsException("The given id is not mapped to a User");
+			throw new UserDoesNotExistsException("The given id is noSystem.out.println(candidate.getProfilePicture());t mapped to a User");
 		else if (candidateRepository.existsByUser(userRepository.findById(id).get())) {
 			throw new CandidateAlreadyExistException("Candidate details already exists for this user.");
 		} else {
@@ -160,4 +155,15 @@ public class CandidateService {
 		return getResume(candidate.getId());
 	}
 
+	public List<Profile> getAllCandidate() {
+		List<Candidate> candidates = candidateRepository.findAll();
+		List<Profile> profiles = new ArrayList<Profile>();
+		for (Candidate candidate : candidates) {
+			profiles.add(new Profile(candidate.getUser().getFirstName(), candidate.getUser().getLastName(),
+					candidate.getUser().getId(), candidate.getUser().getContactNumber(),
+					candidate.getUser().getUserName(), candidate.getCity(), candidate.getCountry(),
+					candidate.getProfilePicture(), candidate.getSkills(), candidate.getExperience()));
+		}
+		return profiles;
+	}
 }
