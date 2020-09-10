@@ -2,8 +2,6 @@ package com.recruitathon.suitup.controller;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +29,9 @@ public class AuthenticationController {
 	public UserDetails authenticate(@RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("Start OF authenticate()");
 		LOGGER.info(authHeader);
-		System.out.println(authHeader);
-		Map<String, String> authmap = new HashMap<String, String>();
 		/* Extract Username from header */
 		String username = getUser(authHeader);
-		authmap.put("username", username);
 		User user = UserRepository.findByUserName(username);
-		// String role = user.getRole().equals("C") ? "Candidate" :
-		// user.getRole().equals("Recruiter") ? "Mentor":"";
-
-		// authmap.put("role", role);
 		String token = generateJwt(getUser(authHeader));
 		LOGGER.info("End of authenticate()");
 

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
 import com.recruitathon.suitup.exception.CandidateAlreadyExistException;
+import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
 import com.recruitathon.suitup.exception.UserDoesNotExistsException;
 import com.recruitathon.suitup.model.Candidate;
 import com.recruitathon.suitup.service.CandidateService;
@@ -26,7 +27,7 @@ public class CandidateController {
 	CandidateService candidateService;
 
 	@GetMapping("/{userId}")
-	public CandidateDetails getCandidateDetails(@PathVariable long userId) {
+	public CandidateDetails getCandidateDetails(@PathVariable long userId) throws CandidateDoesNotExistException {
 		return candidateService.getCandidateDetails(userId);
 	}
 

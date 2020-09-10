@@ -55,6 +55,24 @@ public class CandidateDetails {
 		this.skills = skills;
 	}
 
+	public CandidateDetails(Long id, Date dateOfBirth, String gender, String bio, String country, String city,
+			byte[] profilePicture, byte[] resume, List<Application> applications, List<Education> education,
+			List<Project> project, List<Experience> experience, List<Skills> skills) {
+		super();
+		this.id = id;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.bio = bio;
+		this.country = country;
+		this.city = city;
+		this.profilePicture = profilePicture;
+		this.resume = resume;
+		this.applications = applications;
+		this.education = education;
+		this.project = project;
+		this.experience = experience;
+		this.skills = skills;
+	}
 
 	public Long getId() {
 		return id;

@@ -43,40 +43,56 @@ public class CandidateService {
 	CandidateDetailsService candidateDetails;
 
 	public CandidateDetails candidateDetailsInit(Candidate candidate) {
+		if (candidate.getProfilePicture() != null && candidate.getProfilePicture().length > 0) {
+			candidate.setProfilePicture(FileService.decompressBytes(candidate.getProfilePicture()));
+		}
+		if (candidate.getResume() != null && candidate.getResume().length > 0) {
+			candidate.setResume(FileService.decompressBytes(candidate.getResume()));
+		}
+//		CandidateDetails details =  {
+//			
+//		} catch (NullPointerException e) {}
+//		try {
+//			if (candidate.getResume() != null && candidate.getResume().length > 0) {
+//				candidate.setResume(FileService.decompressBytes(candidate.getResume()));
+//			}
+//		} catch (NullPointerException e) {}
 		return new CandidateDetails(candidate.getId(), candidate.getDateOfBirth(), candidate.getGender(),
 				candidate.getBio(), candidate.getCountry(), candidate.getCity(), candidate.getApplications(),
 				candidate.getEducation(), candidate.getProject(), candidate.getExperience(), candidate.getSkills());
 	}
 
-	public CandidateDetails getCandidateDetails(long id) {
+	public CandidateDetails getCandidateDetails(long id) throws CandidateDoesNotExistException {
 		User user = userRepository.findById(id).get();
 		Candidate candidate = candidateRepository.findByUser(user);
-		return candidateDetailsInit(candidate);
+		if (candidate != null) {
+			return candidateDetailsInit(candidate);
+		} else {
+			throw new CandidateDoesNotExistException("You have not added your details");
+		}
 	}
 
 	public byte[] getProfilePicture(long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
 		return FileService.decompressBytes(candidate.getProfilePicture());
 	}
-	
+
 	public byte[] getResume(long id) {
 		Candidate candidate = candidateRepository.findById(id).get();
 		return FileService.decompressBytes(candidate.getResume());
 	}
 
-
 	@Transactional
 	public CandidateDetails addDetails(Candidate candidate, long id)
 			throws UserDoesNotExistsException, CandidateAlreadyExistException {
-		User user = userRepository.findById(id).get();
-		if (user == null)
+		if (!userRepository.findById(id).isPresent())
 			throw new UserDoesNotExistsException("The given id is not mapped to a User");
-		else if (candidateRepository.existsByUser(user)) {
+		else if (candidateRepository.existsByUser(userRepository.findById(id).get())) {
 			throw new CandidateAlreadyExistException("Candidate details already exists for this user.");
 		} else {
-			candidate.setUser(user);
+			candidate.setUser(userRepository.findById(id).get());
 			candidateRepository.save(candidate);
-			Candidate newCandidate = candidateRepository.findByUser(user);
+			Candidate newCandidate = candidateRepository.findByUser(userRepository.findById(id).get());
 			return candidateDetailsInit(newCandidate);
 		}
 

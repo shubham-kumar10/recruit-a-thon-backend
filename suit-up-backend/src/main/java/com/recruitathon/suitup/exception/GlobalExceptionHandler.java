@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(value = CandidateAlreadyExistException.class)
 	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(CandidateAlreadyExistException e) {
-		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		ErrorResponse error = new ErrorResponse("CANDIDATE_ALREADY_EXISTS", e.getMessage());
 		error.setTimestamp(LocalDateTime.now());
 		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(value = CandidateDoesNotExistException.class)
 	public ResponseEntity<ErrorResponse> handleGenericNotFoundException(CandidateDoesNotExistException e) {
-		ErrorResponse error = new ErrorResponse("INTERNAL_SERVER_ERROR", e.getMessage());
+		ErrorResponse error = new ErrorResponse("CANDIDATE_DOES_NOT_EXIST", e.getMessage());
 		error.setTimestamp(LocalDateTime.now());
 		error.setStatus((HttpStatus.INTERNAL_SERVER_ERROR.value()));
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);

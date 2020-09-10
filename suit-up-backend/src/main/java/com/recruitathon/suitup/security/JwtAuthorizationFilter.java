@@ -60,7 +60,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 					return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 				}
 			} catch (JwtException ex) {
-				return null;
+				throw new JwtException(getFilterName());
 			}
 			return null;
 		}
