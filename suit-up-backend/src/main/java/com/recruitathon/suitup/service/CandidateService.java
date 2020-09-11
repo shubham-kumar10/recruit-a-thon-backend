@@ -1,7 +1,6 @@
 package com.recruitathon.suitup.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
-import com.recruitathon.suitup.dto.Profile;
+import com.recruitathon.suitup.dto.CandidateProfile;
 import com.recruitathon.suitup.exception.ApplicationAlreadyExistsException;
 import com.recruitathon.suitup.exception.CandidateAlreadyExistException;
 import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
@@ -155,15 +154,7 @@ public class CandidateService {
 		return getResume(candidate.getId());
 	}
 
-	public List<Profile> getAllCandidate() {
-		List<Candidate> candidates = candidateRepository.findAll();
-		List<Profile> profiles = new ArrayList<Profile>();
-		for (Candidate candidate : candidates) {
-			profiles.add(new Profile(candidate.getUser().getFirstName(), candidate.getUser().getLastName(),
-					candidate.getUser().getId(), candidate.getUser().getContactNumber(),
-					candidate.getUser().getUserName(), candidate.getCity(), candidate.getCountry(),
-					candidate.getProfilePicture(), candidate.getSkills(), candidate.getExperience()));
-		}
-		return profiles;
+	public List<CandidateProfile> getAllCandidate() {
+		return candidateRepository.findAllBy();
 	}
 }

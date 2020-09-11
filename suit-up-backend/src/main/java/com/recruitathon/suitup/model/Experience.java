@@ -24,11 +24,11 @@ public class Experience {
 	private String organization;
 	
 	@Column(name="start_date")
-	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	
 	@Column(name="end_date")
-	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	
 	@Column(name="designation")

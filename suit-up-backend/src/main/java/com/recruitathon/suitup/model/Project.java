@@ -27,11 +27,11 @@ public class Project {
 	private String description;
 	
 	@Column(name="startDate")
-	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	
 	@Column(name="endDate")
-	@JsonFormat(pattern = "yyy-MM-dd HH:mm:ss.SSS")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
 	
 	@Column(name="ongoing")
