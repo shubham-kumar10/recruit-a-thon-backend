@@ -220,23 +220,7 @@ public class Job {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
-		result = prime * result + ((compensation == null) ? 0 : compensation.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((jobId == null) ? 0 : jobId.hashCode());
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		result = prime * result + ((minimumEducation == null) ? 0 : minimumEducation.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(minimumExperience);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((pointOfContact == null) ? 0 : pointOfContact.hashCode());
-		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		result = prime * result + ((postedOn == null) ? 0 : postedOn.hashCode());
-		result = prime * result + ((process == null) ? 0 : process.hashCode());
-		result = prime * result + ((skillsRequired == null) ? 0 : skillsRequired.hashCode());
-		result = prime * result + travelPercent;
-		result = prime * result + (travelRequired ? 1231 : 1237);
-		result = prime * result + vacancies;
 		return result;
 	}
 
@@ -249,68 +233,10 @@ public class Job {
 		if (getClass() != obj.getClass())
 			return false;
 		Job other = (Job) obj;
-		if (companyName == null) {
-			if (other.companyName != null)
-				return false;
-		} else if (!companyName.equals(other.companyName))
-			return false;
-		if (compensation == null) {
-			if (other.compensation != null)
-				return false;
-		} else if (!compensation.equals(other.compensation))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
 		if (jobId == null) {
 			if (other.jobId != null)
 				return false;
 		} else if (!jobId.equals(other.jobId))
-			return false;
-		if (location == null) {
-			if (other.location != null)
-				return false;
-		} else if (!location.equals(other.location))
-			return false;
-		if (minimumEducation == null) {
-			if (other.minimumEducation != null)
-				return false;
-		} else if (!minimumEducation.equals(other.minimumEducation))
-			return false;
-		if (Double.doubleToLongBits(minimumExperience) != Double.doubleToLongBits(other.minimumExperience))
-			return false;
-		if (pointOfContact == null) {
-			if (other.pointOfContact != null)
-				return false;
-		} else if (!pointOfContact.equals(other.pointOfContact))
-			return false;
-		if (position == null) {
-			if (other.position != null)
-				return false;
-		} else if (!position.equals(other.position))
-			return false;
-		if (postedOn == null) {
-			if (other.postedOn != null)
-				return false;
-		} else if (!postedOn.equals(other.postedOn))
-			return false;
-		if (process == null) {
-			if (other.process != null)
-				return false;
-		} else if (!process.equals(other.process))
-			return false;
-		if (skillsRequired == null) {
-			if (other.skillsRequired != null)
-				return false;
-		} else if (!skillsRequired.equals(other.skillsRequired))
-			return false;
-		if (travelPercent != other.travelPercent)
-			return false;
-		if (travelRequired != other.travelRequired)
-			return false;
-		if (vacancies != other.vacancies)
 			return false;
 		return true;
 	}

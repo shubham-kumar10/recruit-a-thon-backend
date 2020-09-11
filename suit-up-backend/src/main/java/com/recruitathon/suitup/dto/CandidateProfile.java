@@ -11,7 +11,7 @@ public interface CandidateProfile {
 	String getcountry();
 
 	byte[] getProfilePicture();
-
+	
 	List<Skills> getSkills();
 
 	List<Experience> getExperience();

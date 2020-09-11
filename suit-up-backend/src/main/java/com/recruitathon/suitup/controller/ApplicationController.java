@@ -1,6 +1,7 @@
 package com.recruitathon.suitup.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,4 +36,14 @@ public class ApplicationController {
 			throws CandidateDoesNotExistException, JobDoesNotExistException, ApplicationAlreadyExistsException {
 		return candidateService.submitApplication(canId, jobId,"Saved");
 	}
+	
+	@GetMapping("/compare")
+	public void compareApplications() {
+		
+	}
+	
+//	@GetMapping("applications/get")
+//	public List<Application> getAllApplicationsById(long canId){
+//		return candidateService.getAllApplicationsById(canId);
+//	}
 }

@@ -9,4 +9,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long>{
 
 	Application findByJob(Job job);
 	boolean existsByJob(Job job);
+
 }

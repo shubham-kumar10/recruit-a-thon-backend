@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recruitathon.suitup.dto.CandidateDetails;
-import com.recruitathon.suitup.dto.CandidateProfile;
+import com.recruitathon.suitup.dto.ProfileDTO;
 import com.recruitathon.suitup.exception.CandidateAlreadyExistException;
 import com.recruitathon.suitup.exception.CandidateDoesNotExistException;
 import com.recruitathon.suitup.exception.UserDoesNotExistsException;
@@ -62,7 +62,7 @@ public class CandidateController {
 	}
 	
 	@GetMapping("/all")
-	public List<CandidateProfile> getAllCandidates(){
+	public List<ProfileDTO> getAllCandidates(){
 		return candidateService.getAllCandidate();
 	}
 }

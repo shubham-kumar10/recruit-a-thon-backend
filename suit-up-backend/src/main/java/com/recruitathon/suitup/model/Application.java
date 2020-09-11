@@ -19,7 +19,7 @@ public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "application_id")
-	private long applicationId;
+	private Long applicationId;
 
 	@Column(name = "applied_on")
 	private Date appliedOn;
