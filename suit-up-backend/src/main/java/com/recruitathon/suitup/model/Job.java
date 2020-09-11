@@ -54,7 +54,7 @@ public class Job {
 	private int vacancies;
 	
 	@Column(name="position")
-	private int position;
+	private String position;
 	
 	@OneToMany(cascade={CascadeType.ALL})
 	@JoinColumn(name="job_skills_fk")
@@ -76,7 +76,7 @@ public class Job {
 
 	public Job(Long jobId, String companyName, Date postedOn, String description, String location,
 			String pointOfContact, String compensation, boolean travelRequired, int travelPercent, int vacancies,
-			int position, List<JobRequirement> skillsRequired, double minimumExperience, String minimumEducation,
+			String position, List<JobRequirement> skillsRequired, double minimumExperience, String minimumEducation,
 			HiringProcess process) {
 		super();
 		this.jobId = jobId;
@@ -96,62 +96,12 @@ public class Job {
 		this.process = process;
 	}
 
-
 	public Long getJobId() {
 		return jobId;
 	}
 
-	public int getPosition() {
-		return position;
-	}
-	
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
 	public void setJobId(Long jobId) {
 		this.jobId = jobId;
-	}
-
-	public HiringProcess getProcess() {
-		return process;
-	}
-
-	public void setProcess(HiringProcess process) {
-		this.process = process;
-	}
-
-	public String getCompensation() {
-		return compensation;
-	}
-
-	public void setCompensation(String compensation) {
-		this.compensation = compensation;
-	}
-
-	public boolean isTravelRequired() {
-		return travelRequired;
-	}
-
-	public void setTravelRequired(boolean travelRequired) {
-		this.travelRequired = travelRequired;
-	}
-
-	public int getTravelPercent() {
-		return travelPercent;
-	}
-
-	public void setTravelPercent(int travelPercent) {
-		this.travelPercent = travelPercent;
-	}
-
-	public int getVacancies() {
-		return vacancies;
-	}
-
-	public void setVacancies(int vacancies) {
-		this.vacancies = vacancies;
 	}
 
 	public String getCompanyName() {
@@ -194,6 +144,46 @@ public class Job {
 		this.pointOfContact = pointOfContact;
 	}
 
+	public String getCompensation() {
+		return compensation;
+	}
+
+	public void setCompensation(String compensation) {
+		this.compensation = compensation;
+	}
+
+	public boolean isTravelRequired() {
+		return travelRequired;
+	}
+
+	public void setTravelRequired(boolean travelRequired) {
+		this.travelRequired = travelRequired;
+	}
+
+	public int getTravelPercent() {
+		return travelPercent;
+	}
+
+	public void setTravelPercent(int travelPercent) {
+		this.travelPercent = travelPercent;
+	}
+
+	public int getVacancies() {
+		return vacancies;
+	}
+
+	public void setVacancies(int vacancies) {
+		this.vacancies = vacancies;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
 	public List<JobRequirement> getSkillsRequired() {
 		return skillsRequired;
 	}
@@ -218,6 +208,14 @@ public class Job {
 		this.minimumEducation = minimumEducation;
 	}
 
+	public HiringProcess getProcess() {
+		return process;
+	}
+
+	public void setProcess(HiringProcess process) {
+		this.process = process;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -232,7 +230,7 @@ public class Job {
 		temp = Double.doubleToLongBits(minimumExperience);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((pointOfContact == null) ? 0 : pointOfContact.hashCode());
-		result = prime * result + position;
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		result = prime * result + ((postedOn == null) ? 0 : postedOn.hashCode());
 		result = prime * result + ((process == null) ? 0 : process.hashCode());
 		result = prime * result + ((skillsRequired == null) ? 0 : skillsRequired.hashCode());
@@ -288,7 +286,10 @@ public class Job {
 				return false;
 		} else if (!pointOfContact.equals(other.pointOfContact))
 			return false;
-		if (position != other.position)
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
 			return false;
 		if (postedOn == null) {
 			if (other.postedOn != null)
@@ -323,5 +324,7 @@ public class Job {
 				+ ", minimumExperience=" + minimumExperience + ", minimumEducation=" + minimumEducation + ", process="
 				+ process + "]";
 	}
-	
+
 }
+
+
