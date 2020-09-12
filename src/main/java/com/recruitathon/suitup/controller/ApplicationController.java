@@ -1,6 +1,7 @@
 package com.recruitathon.suitup.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import com.recruitathon.suitup.exception.JobDoesNotExistException;
 import com.recruitathon.suitup.model.Application;
 import com.recruitathon.suitup.service.CandidateService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ApplicationController {
 
@@ -42,8 +44,8 @@ public class ApplicationController {
 		
 	}
 	
-//	@GetMapping("applications/get")
-//	public List<Application> getAllApplicationsById(long canId){
-//		return candidateService.getAllApplicationsById(canId);
-//	}
+	@GetMapping("applications/get")
+	public String testEndpoint(){
+		return "API is running";
+	}
 }
