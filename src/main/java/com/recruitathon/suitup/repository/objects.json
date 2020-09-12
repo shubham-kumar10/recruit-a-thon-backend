@@ -1,0 +1,66 @@
+{
+    "userName": "Test User 1",
+    "password": "pwd",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "contactNumber": "1234567890",
+    "regCode": "",
+    "role": "S",
+    "active": true,
+    "confirmedSignUp": true,
+    "resetPassword": "",
+    "resetPasswordDate": ""
+}
+
+{
+    "id": "",
+    "user": {
+        "id": 1,
+        "userName": "Test User 1",
+        "password": "pwd",
+        "firstName": "firstName",
+        "lastName": "lastName",
+        "contactNumber": "1234567890",
+        "regCode": "",
+        "role": "S",
+        "active": true,
+        "confirmedSignUp": true,
+        "resetPassword": "",
+        "resetPasswordDate": ""
+    },
+    "dateOfBirth": "",
+    "gender": "M",
+    "bio": "bio",
+    "country": "country",
+    "city": "city",
+    "profilePicture": "",
+    "resume": ""
+}
+
+{
+    "id": "",
+    "companyName": "Amazon",
+    "postedOn": "2009-12-31 23:59:59.999",
+    "description": "Software Development Engineer -1",
+    "location": "Hyderabad",
+    "pointOfContact": "TOny Stark",
+    "compensation": "24000000",
+    "travelRequired": false,
+    "travelPercent": "20",
+    "vacancies": "12",
+    "process": {
+        "id": "",
+        "rounds":[
+ {
+            "round_id": "",
+            "location": "Remote",
+            "duration": "2 hours",
+            "pointOfContact": "Leo Messi",
+            "description": "Interview"
+        },{}
+        ],
+        "description": "Good INterview",
+        "location": "Hyderabad",
+        "duration": "2 hours"
+    }
+}
