@@ -14,7 +14,6 @@ import com.recruitathon.suitup.exception.JobDoesNotExistException;
 import com.recruitathon.suitup.model.Application;
 import com.recruitathon.suitup.service.CandidateService;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class ApplicationController {
 

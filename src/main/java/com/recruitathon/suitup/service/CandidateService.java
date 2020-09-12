@@ -1,6 +1,8 @@
 package com.recruitathon.suitup.service;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -125,21 +127,22 @@ public class CandidateService {
 					throw new ApplicationAlreadyExistsException("You have already applied to this Job.");
 				}
 				if ("Saved".equalsIgnoreCase(applicationList.get(0).getStatus())) {
-					application = applicationRepository
-							.findById(applicationList.get(0).getApplicationId()).get();
+					application = applicationRepository.findById(applicationList.get(0).getApplicationId()).get();
 					application.setStatus("Applied");
 					application.setAppliedOn(new Date());
 					candidate.getApplications().remove(candidate.getApplications().indexOf(application));
 					applicationList = candidate.getApplications();
 					applicationList.add(application);
 					candidate.setApplications(applicationList);
+					candidate = candidateRepository.save(candidate);
 				}
 			} else {
-				application = new Application(new Date(), status, false, 0.0, 0.0, job);
+				double skillMatch = compareSkills(jobId, canId);
+				application = new Application(new Date(), status, false, skillMatch, 0.0, job);
 				applicationList = candidate.getApplications();
 				applicationList.add(application);
 				candidate.setApplications(applicationList);
-				candidate = candidateRepository.save(candidate);
+				candidate = candidateRepository.save(candidate);				
 			}
 			return candidateDetailsInit(candidate);
 		}
@@ -168,16 +171,30 @@ public class CandidateService {
 		return candidateList;
 	}
 
-	public void compareApplications(long jobId, long canId) {
+	public double compareSkills(long jobId, long canId) {
+		int points=0;
 		List<String> jobReq = jobRepository.findById(jobId).get().getSkillsRequired().stream()
 				.map(JobRequirement::getName).collect(Collectors.toList());
 		List<String> skills = candidateRepository.findById(canId).get().getSkills().stream().map(Skills::getSkillName)
 				.collect(Collectors.toList());
 		for (String req : jobReq) {
-			System.out.println(req);
+			if(skills.contains(req)) {
+				points++;
+			}
 		}
-		for (String skill : skills) {
-			System.out.println(skill);
-		}
+		return points/jobReq.size();
+	}
+	
+	public double compareApplications(long jobId, long canId) {
+		List<Application> applicationList= applicationRepository.findAllByJob(jobRepository.findById(jobId).get());
+		Collections.sort(applicationList);
+		List<Application> app = candidateRepository.findById(canId).get().getApplications();
+		int i = applicationList.indexOf(app.get(app.size()));
+		return i/applicationList.size();
+	}
+	
+	public List<Application> findAllApplication(long canId){
+		Candidate candidate = candidateRepository.findById(canId).get();
+		return null;
 	}
 }

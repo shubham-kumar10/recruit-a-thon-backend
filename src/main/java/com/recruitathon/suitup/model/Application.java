@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "applications")
-public class Application {
+public class Application implements Comparable<Application>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,14 @@ public class Application {
 		this.percentile = percentile;
 		this.job = job;
 	}
-
+	
+	@Override
+	public int compareTo(Application o) {
+		 double compareSkills = o.getSkillMatch();
+	        /* For Ascending order*/
+	        return (int) (this.skillMatch-compareSkills);
+	}
+	
 	public long getApplicationId() {
 		return applicationId;
 	}
@@ -181,4 +188,6 @@ public class Application {
 				+ ", isComplete=" + isComplete + ", skillMatch=" + skillMatch + ", percentile=" + percentile + ", job="
 				+ job + "]";
 	}
+
+	
 }
