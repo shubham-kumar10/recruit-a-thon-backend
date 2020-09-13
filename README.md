@@ -1,2 +1,2 @@
 # recruit-a-thon-backend
-REST APIs 
+The repository contains the REST API's for SuitUp.
